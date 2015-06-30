@@ -1,8 +1,24 @@
 #!/usr/bin/ruby
 
-puts "Shipping..."
+require_relative("../lib/yes_ship_it.rb")
 
-if !File.exist?("yes_ship_it.conf")
+puts "Shipping..."
+puts
+
+config_file = "yes_ship_it.conf"
+
+if !File.exist?(config_file)
   STDERR.puts("Unable to find file `yes_ship_it.conf`. I need it.")
+  exit 1
+end
+
+engine = YSI::Engine.new
+
+begin
+  engine.read(config_file)
+
+  exit engine.run
+rescue YSI::Error => e
+  STDERR.puts e
   exit 1
 end

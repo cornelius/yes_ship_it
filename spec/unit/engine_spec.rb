@@ -11,13 +11,43 @@ describe YSI::Engine do
         to be(YSI::VersionNumber)
     end
 
-    it "creates ReleaseNotes class" do
-      expect(YSI::Engine.class_for_assertion_name("release_notes")).
-        to be(YSI::ReleaseNotes)
+    it "creates ChangeLog class" do
+      expect(YSI::Engine.class_for_assertion_name("change_log")).
+        to be(YSI::ChangeLog)
     end
   end
 
-  it "reads configuration" do
+  describe "#read" do
+    it "reads valid configuration" do
+      path = nil
+      given_directory do
+        path = given_file("yes_ship_it.conf")
+      end
+
+      ysi = YSI::Engine.new
+
+      ysi.read(path)
+
+      expect(ysi.assertions.count).to eq(2)
+      expect(ysi.assertions[0].class).to eq(YSI::VersionNumber)
+      expect(ysi.assertions[1].class).to eq(YSI::ChangeLog)
+    end
+
+    it "fails on configuration with unknown assertions" do
+      path = nil
+      given_directory do
+        path = given_file("yes_ship_it.conf", from: "yes_ship_it.unknown.conf")
+      end
+
+      ysi = YSI::Engine.new
+
+      expect {
+        ysi.read(path)
+      }.to raise_error YSI::Error
+    end
+  end
+
+  it "runs assertions" do
     path = nil
     given_directory do
       path = given_file("yes_ship_it.conf")
@@ -27,8 +57,10 @@ describe YSI::Engine do
 
     ysi.read(path)
 
-    expect(ysi.assertions.count).to eq(2)
-    expect(ysi.assertions[0].class).to eq(YSI::VersionNumber)
-    expect(ysi.assertions[1].class).to eq(YSI::ReleaseNotes)
+    ysi.assertions.each do |a|
+      expect(a).to receive(:check)
+    end
+
+    ysi.run
   end
 end
