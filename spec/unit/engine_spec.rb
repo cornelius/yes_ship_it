@@ -61,6 +61,8 @@ describe YSI::Engine do
       expect(a).to receive(:check)
     end
 
+    ysi.out = StringIO.new
+
     ysi.run
   end
 end
