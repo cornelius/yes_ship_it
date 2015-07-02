@@ -1,5 +1,6 @@
 require "yaml"
 
+require_relative "yes_ship_it/assertion.rb"
 require_relative "yes_ship_it/engine.rb"
 require_relative "yes_ship_it/exceptions.rb"
 

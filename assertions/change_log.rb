@@ -1,5 +1,5 @@
 module YSI
-  class ChangeLog
+  class ChangeLog < Assertion
     attr_reader :error
 
     def initialize(engine)

@@ -1,5 +1,5 @@
 module YSI
-  class Version
+  class Version < Assertion
     attr_accessor :error
 
     def initialize(engine)
