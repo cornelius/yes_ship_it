@@ -20,8 +20,10 @@ describe "command line interface" do
       expected_output = <<EOT
 Shipping...
 
+Warning: use `version` instead of `version_number`.
+
 Checking version number: fail
-  Expected version number in lib/version.rb
+  Expected version in lib/version.rb
 Checking change log: fail
   Expected change log in CHANGELOG.md
 
@@ -40,6 +42,8 @@ EOT
       expected_output = <<EOT
 Shipping...
 
+Warning: use `version` instead of `version_number`.
+
 Checking version number: 0.0.1
 Checking change log: CHANGELOG.md
 
@@ -57,6 +61,8 @@ EOT
 
       expected_output = <<EOT
 Shipping...
+
+Warning: use `version` instead of `version_number`.
 
 Checking version number: 0.0.1
 Checking change log: CHANGELOG.md

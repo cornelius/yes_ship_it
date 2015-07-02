@@ -1,5 +1,5 @@
 module YSI
-  class VersionNumber
+  class Version
     attr_accessor :error
 
     def initialize(engine)
@@ -13,7 +13,7 @@ module YSI
     def check
       version_file = "lib/version.rb"
       if !File.exist?(version_file)
-        @error = "Expected version number in #{version_file}"
+        @error = "Expected version in #{version_file}"
         return nil
       end
 

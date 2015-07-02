@@ -7,8 +7,8 @@ describe YSI::Engine do
 
   describe "#class_for_assertion_name" do
     it "creates VersionNumber class" do
-      expect(YSI::Engine.class_for_assertion_name("version_number")).
-        to be(YSI::VersionNumber)
+      expect(YSI::Engine.class_for_assertion_name("version")).
+        to be(YSI::Version)
     end
 
     it "creates ChangeLog class" do
@@ -29,7 +29,7 @@ describe YSI::Engine do
       ysi.read(path)
 
       expect(ysi.assertions.count).to eq(2)
-      expect(ysi.assertions[0].class).to eq(YSI::VersionNumber)
+      expect(ysi.assertions[0].class).to eq(YSI::Version)
       expect(ysi.assertions[1].class).to eq(YSI::ChangeLog)
     end
 

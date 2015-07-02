@@ -22,6 +22,12 @@ module YSI
       assertions = config["assertions"]
       if assertions
         assertions.each do |assertion|
+          if assertion == "version_number"
+            puts "Warning: use `version` instead of `version_number`."
+            puts
+            assertion = "version"
+          end
+
           @assertions << YSI::Engine.class_for_assertion_name(assertion).new(self)
         end
       end
