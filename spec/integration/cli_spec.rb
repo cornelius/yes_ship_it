@@ -22,9 +22,9 @@ Shipping...
 
 Warning: use `version` instead of `version_number`.
 
-Checking version number: fail
+Checking version number: error
   Expected version in lib/version.rb
-Checking change log: fail
+Checking change log: error
   Expected change log in CHANGELOG.md
 
 Couldn't ship red_herring. Help me.
@@ -69,6 +69,28 @@ Checking change log: CHANGELOG.md
 Checking tag: v0.0.1
 
 red_herring 0.0.1 already shipped on Wed Jul 1 00:46:19 2015 +0200
+EOT
+
+      expect(run_command(working_directory: File.join(dir, "red_herring"))).
+        to exit_with_success(expected_output)
+    end
+
+    it "fails when gem is not built" do
+      dir = given_directory
+
+      setup_test_git_repo("003", dir)
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: 0.0.1
+Checking change log: CHANGELOG.md
+Checking built gem: fail
+Checking tag: v0.0.1
+
+Asserting built gem: red_herring-0.0.1.gem
+
+Shipped red_herring 0.0.1. Hooray!
 EOT
 
       expect(run_command(working_directory: File.join(dir, "red_herring"))).

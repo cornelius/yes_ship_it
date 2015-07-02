@@ -41,6 +41,7 @@ module YSI
 
     def run
       failed_assertions = []
+      errored_assertions = []
 
       @assertions.each do |assertion|
         out.print "Checking #{assertion.display_name}: "
@@ -48,26 +49,41 @@ module YSI
         if success
           out.puts success
         else
-          out.puts "fail"
           if assertion.error
+            out.puts "error"
             out.puts "  " + assertion.error
+            errored_assertions.push(assertion)
+          else
+            out.puts "fail"
+            failed_assertions.push(assertion)
           end
-          failed_assertions.push(assertion)
         end
       end
 
       out.puts
 
-      if failed_assertions.empty?
-        if tag_date
-          out.puts "#{project_name} #{version} already shipped on #{tag_date}"
-        else
-          out.puts "#{project_name} #{version} already shipped"
-        end
-        return 0
-      else
+      if !errored_assertions.empty?
         out.puts "Couldn't ship #{project_name}. Help me."
         return 1
+      else
+        if failed_assertions.empty?
+          if tag_date
+            out.puts "#{project_name} #{version} already shipped on #{tag_date}"
+          else
+            out.puts "#{project_name} #{version} already shipped"
+          end
+          return 0
+        else
+          failed_assertions.each do |assertion|
+            out.print "Asserting #{assertion.display_name}: "
+            success = assertion.assert
+            out.puts success
+          end
+
+          out.puts
+          out.puts "Shipped #{project_name} #{version}. Hooray!"
+          return 0
+        end
       end
     end
   end
