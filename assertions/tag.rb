@@ -1,11 +1,5 @@
 module YSI
   class Tag < Assertion
-    attr_accessor :error
-
-    def initialize(engine)
-      @engine = engine
-    end
-
     def display_name
       "tag"
     end
