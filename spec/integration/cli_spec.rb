@@ -96,5 +96,28 @@ EOT
       expect(run_command(working_directory: File.join(dir, "red_herring"))).
         to exit_with_success(expected_output)
     end
+
+    it "processes the --dry-run option" do
+      dir = given_directory
+
+      setup_test_git_repo("003", dir)
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: 0.0.1
+Checking change log: CHANGELOG.md
+Checking built gem: fail
+Checking tag: v0.0.1
+
+Dry run: Asserting built gem: red_herring-0.0.1.gem
+
+Did a dry run of shipping red_herring 0.0.1. Nothing was changed.
+EOT
+
+      expect(run_command(args: ["--dry-run"],
+        working_directory: File.join(dir, "red_herring"))).
+        to exit_with_success(expected_output)
+    end
   end
 end

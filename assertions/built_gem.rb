@@ -21,8 +21,10 @@ module YSI
       gem_file
     end
 
-    def assert
-      `gem build #{@engine.project_name}.gemspec`
+    def assert(dry_run: false)
+      if !dry_run
+        `gem build #{@engine.project_name}.gemspec`
+      end
       gem_file
     end
   end

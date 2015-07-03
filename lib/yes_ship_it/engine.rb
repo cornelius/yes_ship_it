@@ -3,6 +3,7 @@ module YSI
     attr_reader :assertions
     attr_accessor :version, :tag_date
     attr_accessor :out
+    attr_accessor :dry_run
 
     def self.class_for_assertion_name(name)
       class_name = name.split("_").map { |n| n.capitalize }.join
@@ -75,13 +76,21 @@ module YSI
           return 0
         else
           failed_assertions.each do |assertion|
+            if dry_run
+              out.print "Dry run: "
+            end
             out.print "Asserting #{assertion.display_name}: "
-            success = assertion.assert
+            success = assertion.assert(dry_run: true)
             out.puts success
           end
 
           out.puts
-          out.puts "Shipped #{project_name} #{version}. Hooray!"
+          if dry_run
+            out.puts "Did a dry run of shipping #{project_name} #{version}." +
+              " Nothing was changed."
+          else
+            out.puts "Shipped #{project_name} #{version}. Hooray!"
+          end
           return 0
         end
       end

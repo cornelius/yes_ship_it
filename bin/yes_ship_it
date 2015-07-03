@@ -13,6 +13,7 @@ if !File.exist?(config_file)
 end
 
 engine = YSI::Engine.new
+engine.dry_run = ARGV == ["--dry-run"]
 
 begin
   engine.read(config_file)

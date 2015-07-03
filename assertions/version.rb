@@ -27,7 +27,7 @@ module YSI
       nil
     end
 
-    def assert
+    def assert(dry_run: false)
     end
   end
 end
