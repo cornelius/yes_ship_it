@@ -1,4 +1,5 @@
 require "yaml"
+require "rest-client"
 
 require_relative "yes_ship_it/assertion.rb"
 require_relative "yes_ship_it/engine.rb"

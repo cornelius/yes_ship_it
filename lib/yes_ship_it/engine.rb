@@ -80,7 +80,7 @@ module YSI
               out.print "Dry run: "
             end
             out.print "Asserting #{assertion.display_name}: "
-            success = assertion.assert(dry_run: true)
+            success = assertion.assert(dry_run: dry_run)
             out.puts success
           end
 

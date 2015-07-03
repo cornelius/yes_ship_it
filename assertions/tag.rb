@@ -19,11 +19,14 @@ module YSI
           return tag
         end
       end
-      @error = "Tag #{tag} is not there yet"
       return nil
     end
 
     def assert(dry_run: false)
+      if !dry_run
+        `git tag -a #{tag} -m "Version #{@engine.version}"`
+      end
+      tag
     end
   end
 end
