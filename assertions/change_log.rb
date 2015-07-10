@@ -16,10 +16,23 @@ module YSI
         return nil
       end
 
+      @error = check_content(File.read("CHANGELOG.md"))
+      if @error
+        return nil
+      end
+
       "CHANGELOG.md"
     end
 
     def assert(dry_run: false)
+    end
+
+    def check_content(content)
+      if content =~ /#{engine.version}/
+        nil
+      else
+        return "Can't find version #{engine.version} in change log"
+      end
     end
   end
 end

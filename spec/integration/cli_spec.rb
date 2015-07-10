@@ -119,5 +119,26 @@ EOT
         working_directory: File.join(dir, "red_herring"))).
         to exit_with_success(expected_output)
     end
+
+    it "checks the change log" do
+      dir = given_directory
+
+      setup_test_git_repo("004", dir)
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: 0.0.2
+Checking change log: error
+  Can't find version 0.0.2 in change log
+Checking built gem: fail
+Checking tag: fail
+
+Couldn't ship red_herring. Help me.
+EOT
+
+      expect(run_command(working_directory: File.join(dir, "red_herring"))).
+        to exit_with_error(1, "", expected_output)
+    end
   end
 end
