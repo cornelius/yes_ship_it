@@ -22,16 +22,24 @@ module YSI
     def read(filename)
       config = YAML.load_file(filename)
 
-      assertions = config["assertions"]
-      if assertions
-        assertions.each do |assertion|
-          if assertion == "version_number"
-            out.puts "Warning: use `version` instead of `version_number`."
-            out.puts
-            assertion = "version"
-          end
+      config.each do |key,value|
+        if key == "include"
+          included_file = value
+          configs_path = File.expand_path("../../../configs", __FILE__)
+          read(File.join(configs_path, included_file + ".conf"))
+        elsif key == "assertions"
+          assertions = value
+          if assertions
+            assertions.each do |assertion|
+              if assertion == "version_number"
+                out.puts "Warning: use `version` instead of `version_number`."
+                out.puts
+                assertion = "version"
+              end
 
-          @assertions << YSI::Engine.class_for_assertion_name(assertion).new(self)
+              @assertions << YSI::Engine.class_for_assertion_name(assertion).new(self)
+            end
+          end
         end
       end
     end

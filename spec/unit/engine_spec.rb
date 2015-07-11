@@ -45,6 +45,13 @@ describe YSI::Engine do
         ysi.read(path)
       }.to raise_error YSI::Error
     end
+
+    it "throws error when file does not exist" do
+      ysi = YSI::Engine.new
+      expect {
+        ysi.read("/this/file/does/not/exist.conf")
+      }.to raise_error Errno::ENOENT
+    end
   end
 
   it "runs assertions" do
@@ -79,5 +86,18 @@ describe YSI::Engine do
     ysi.version = "1.2.3"
 
     expect(ysi.tag).to eq("v1.2.3")
+  end
+
+  it "loads standard config" do
+    ysi_standard = YSI::Engine.new
+    ysi_standard.read("configs/ruby_gem.conf")
+
+    ysi = YSI::Engine.new
+    ysi.read(given_file("yes_ship_it.include.conf"))
+
+    expect(ysi.assertions.count).to be >= 6
+    ysi_standard.assertions.each_with_index do |assertion, i|
+      expect(assertion.class).to eq(ysi.assertions[i].class)
+    end
   end
 end
