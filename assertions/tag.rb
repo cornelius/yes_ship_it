@@ -5,7 +5,7 @@ module YSI
     end
 
     def tag
-      "v#{@engine.version}"
+      @engine.tag
     end
 
     def check

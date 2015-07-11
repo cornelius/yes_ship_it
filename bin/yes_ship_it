@@ -2,9 +2,6 @@
 
 require_relative("../lib/yes_ship_it.rb")
 
-puts "Shipping..."
-puts
-
 config_file = "yes_ship_it.conf"
 
 if !File.exist?(config_file)
@@ -12,14 +9,24 @@ if !File.exist?(config_file)
   exit 1
 end
 
-engine = YSI::Engine.new
-engine.dry_run = ARGV == ["--dry-run"]
+if ARGV[0] == "changelog"
+  engine = YSI::Engine.new
+  engine.check_assertion(YSI::Version)
+  system("git log #{engine.tag}..HEAD")
+  exit 0
+else
+  puts "Shipping..."
+  puts
 
-begin
-  engine.read(config_file)
+  engine = YSI::Engine.new
+  engine.dry_run = ARGV == ["--dry-run"]
 
-  exit engine.run
-rescue YSI::Error => e
-  STDERR.puts e
-  exit 1
+  begin
+    engine.read(config_file)
+
+    exit engine.run
+  rescue YSI::Error => e
+    STDERR.puts e
+    exit 1
+  end
 end

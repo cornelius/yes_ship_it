@@ -141,4 +141,30 @@ EOT
         to exit_with_error(1, "", expected_output)
     end
   end
+
+  describe "changelog helper" do
+    it "shows changelog since last version" do
+      dir = given_directory
+
+      setup_test_git_repo("005", dir)
+
+      expected_output = <<EOT
+commit 22cb6af3f7ea8385a8d0c62340c99265e0c8a63d
+Author: Cornelius Schumacher <schumacher@kde.org>
+Date:   Fri Jul 10 23:54:01 2015 +0200
+
+    Implement magic method
+
+commit 40ec45663e2a3cf32895b451cc43e667463af431
+Author: Cornelius Schumacher <schumacher@kde.org>
+Date:   Fri Jul 10 23:50:08 2015 +0200
+
+    Add magic method
+EOT
+
+      expect(run_command(args: ["changelog"],
+        working_directory: File.join(dir, "red_herring"))).
+        to exit_with_success(expected_output)
+    end
+  end
 end

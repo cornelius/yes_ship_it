@@ -65,4 +65,19 @@ describe YSI::Engine do
 
     ysi.run
   end
+
+  it "runs assertion" do
+    ysi = YSI::Engine.new
+
+    expect_any_instance_of(YSI::Version).to receive(:check)
+
+    ysi.check_assertion(YSI::Version)
+  end
+
+  it "provides tag" do
+    ysi = YSI::Engine.new
+    ysi.version = "1.2.3"
+
+    expect(ysi.tag).to eq("v1.2.3")
+  end
 end

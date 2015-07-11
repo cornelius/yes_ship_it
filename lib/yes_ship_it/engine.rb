@@ -36,8 +36,16 @@ module YSI
       end
     end
 
+    def check_assertion(assertion_class)
+      assertion_class.new(self).check
+    end
+
     def project_name
       File.basename(Dir.pwd)
+    end
+
+    def tag
+      "v#{version}"
     end
 
     def run
