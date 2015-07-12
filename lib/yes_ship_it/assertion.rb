@@ -13,8 +13,10 @@ module YSI
     end
 
     def self.needs(dependency)
-      @@dependencies ||= []
-      @@dependencies << dependency
+      @@dependency_names ||= []
+      # Classes might not all be loaded yet, so delay class name lookup to
+      # first invocation of #needs
+      @@dependency_names << dependency
     end
 
     def initialize(engine)
@@ -22,11 +24,13 @@ module YSI
     end
 
     def needs
-      @@dependencies
+      @@dependencies ||= @@dependency_names.map do |d|
+        Assertion.class_for_name(d)
+      end
     end
 
     def needs?(dependency)
-      @@dependencies.include?(dependency)
+      needs.include?(dependency)
     end
   end
 end

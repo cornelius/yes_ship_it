@@ -1,6 +1,6 @@
 module YSI
   class ChangeLog < Assertion
-    needs :version
+    needs "version"
 
     attr_reader :error
 

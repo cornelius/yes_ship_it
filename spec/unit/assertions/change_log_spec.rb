@@ -41,12 +41,12 @@ EOT
   describe "dependencies" do
     it "#needs?" do
       a = YSI::ChangeLog.new(YSI::Engine)
-      expect(a.needs?(:version)).to be(true)
+      expect(a.needs?(YSI::Version)).to be(true)
     end
 
     it "#needs" do
       a = YSI::ChangeLog.new(YSI::Engine)
-      expect(a.needs).to eq([:version])
+      expect(a.needs).to eq([YSI::Version])
     end
   end
 end
