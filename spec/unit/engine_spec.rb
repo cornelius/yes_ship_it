@@ -5,18 +5,6 @@ include GivenFilesystemSpecHelpers
 describe YSI::Engine do
   use_given_filesystem
 
-  describe "#class_for_assertion_name" do
-    it "creates VersionNumber class" do
-      expect(YSI::Engine.class_for_assertion_name("version")).
-        to be(YSI::Version)
-    end
-
-    it "creates ChangeLog class" do
-      expect(YSI::Engine.class_for_assertion_name("change_log")).
-        to be(YSI::ChangeLog)
-    end
-  end
-
   describe "#read" do
     it "reads valid configuration" do
       path = nil

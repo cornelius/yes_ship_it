@@ -5,15 +5,6 @@ module YSI
     attr_accessor :out
     attr_accessor :dry_run
 
-    def self.class_for_assertion_name(name)
-      class_name = name.split("_").map { |n| n.capitalize }.join
-      begin
-        Object.const_get("YSI::" + class_name)
-      rescue NameError
-        raise YSI::Error.new("Error: Unknown assertion '#{name}'")
-      end
-    end
-
     def initialize
       @assertions = []
       @out = STDOUT
@@ -37,7 +28,7 @@ module YSI
                 assertion = "version"
               end
 
-              @assertions << YSI::Engine.class_for_assertion_name(assertion).new(self)
+              @assertions << YSI::Assertion.class_for_name(assertion).new(self)
             end
           end
         end
