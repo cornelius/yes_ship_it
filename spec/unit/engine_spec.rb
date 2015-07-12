@@ -88,4 +88,20 @@ describe YSI::Engine do
       expect(assertion.class).to eq(ysi.assertions[i].class)
     end
   end
+
+  describe "#dependency_errored?" do
+    it "returns true, if no dependency errored" do
+      engine = YSI::Engine.new
+      errored_assertions = []
+      assertion = YSI::ChangeLog.new(engine)
+      expect(engine.dependency_errored?(assertion, errored_assertions)).to be(false)
+    end
+
+    it "returns false, if a dependency errored" do
+      engine = YSI::Engine.new
+      errored_assertions = [YSI::Version.new(engine)]
+      assertion = YSI::ChangeLog.new(engine)
+      expect(engine.dependency_errored?(assertion, errored_assertions)).to be(true)
+    end
+  end
 end

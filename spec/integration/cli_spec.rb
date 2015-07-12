@@ -24,8 +24,7 @@ Warning: use `version` instead of `version_number`.
 
 Checking version number: error
   Expected version in lib/version.rb
-Checking change log: error
-  Expected change log in CHANGELOG.md
+Checking change log: skip (because dependency errored)
 
 Couldn't ship red_herring. Help me.
 EOT
@@ -138,6 +137,33 @@ Couldn't ship red_herring. Help me.
 EOT
 
       expect(run_command(working_directory: File.join(dir, "red_herring"))).
+        to exit_with_error(1, "", expected_output)
+    end
+
+    it "skips assertions with errored dependencies" do
+      dir = nil
+      given_directory do
+        dir = given_directory "test_project" do
+          given_file("yes_ship_it.conf", from: "yes_ship_it.include.conf")
+        end
+      end
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: error
+  Expected version in lib/version.rb
+Checking change log: skip (because dependency errored)
+Checking tag: skip (because dependency errored)
+Checking built gem: error
+  Couldn't find Gem spec 'test_project.gemspec'
+Checking published gem: skip (because dependency errored)
+Checking pushed tag: skip (because dependency errored)
+
+Couldn't ship test_project. Help me.
+EOT
+
+      expect(run_command(working_directory: dir)).
         to exit_with_error(1, "", expected_output)
     end
   end

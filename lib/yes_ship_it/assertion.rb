@@ -20,7 +20,7 @@ module YSI
     end
 
     def self.dependency_names
-      @dependency_names
+      @dependency_names || []
     end
 
     def initialize(engine)

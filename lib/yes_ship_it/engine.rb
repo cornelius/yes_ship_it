@@ -47,12 +47,30 @@ module YSI
       "v#{version}"
     end
 
+    def dependency_errored?(assertion, errored_assertions)
+      assertion.needs.each do |need|
+        errored_assertions.each do |errored_assertion|
+          if errored_assertion.class == need
+            return true
+          end
+        end
+      end
+      false
+    end
+
     def run
       failed_assertions = []
       errored_assertions = []
+      skipped_assertions = []
 
       @assertions.each do |assertion|
         out.print "Checking #{assertion.display_name}: "
+        if dependency_errored?(assertion, errored_assertions) ||
+           dependency_errored?(assertion, skipped_assertions)
+          out.puts "skip (because dependency errored)"
+          skipped_assertions << assertion
+          next
+        end
         success = assertion.check
         if success
           out.puts success
