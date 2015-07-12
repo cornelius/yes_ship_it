@@ -1,5 +1,7 @@
 module YSI
   class PublishedGem < Assertion
+    needs "built_gem"
+
     attr_accessor :error
 
     def initialize(engine)
