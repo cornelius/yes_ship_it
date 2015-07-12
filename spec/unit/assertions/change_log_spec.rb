@@ -37,4 +37,16 @@ EOT
       expect(a.check_content(content)).to be_nil
     end
   end
+
+  describe "dependencies" do
+    it "#needs?" do
+      a = YSI::ChangeLog.new(YSI::Engine)
+      expect(a.needs?(:version)).to be(true)
+    end
+
+    it "#needs" do
+      a = YSI::ChangeLog.new(YSI::Engine)
+      expect(a.needs).to eq([:version])
+    end
+  end
 end
