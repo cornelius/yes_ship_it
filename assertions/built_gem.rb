@@ -14,24 +14,29 @@ module YSI
       "#{@engine.project_name}-#{@engine.version}.gem"
     end
 
-    def gem_spec_file
+    def gemspec_file
       "#{@engine.project_name}.gemspec"
     end
 
     def check
-      if !File.exist?(gem_spec_file)
-        @error = "Couldn't find Gem spec '#{gem_spec_file}'"
+      if !File.exist?(gemspec_file)
+        @error = "I need a gemspec: #{gemspec_file}"
         return nil
       end
+
       if !File.exist?(gem_file)
         return nil
       end
+
       gem_file
     end
 
     def assert(dry_run: false)
       if !dry_run
-        `gem build #{gem_spec_file}`
+        `gem build #{gemspec_file}`
+        if $?.to_i != 0
+          return nil
+        end
       end
       gem_file
     end

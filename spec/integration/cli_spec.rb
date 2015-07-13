@@ -156,7 +156,7 @@ Checking version number: error
 Checking change log: skip (because dependency errored)
 Checking tag: skip (because dependency errored)
 Checking built gem: error
-  Couldn't find Gem spec 'test_project.gemspec'
+  I need a gemspec: test_project.gemspec
 Checking published gem: skip (because dependency errored)
 Checking pushed tag: skip (because dependency errored)
 

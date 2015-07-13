@@ -17,7 +17,11 @@ module YSI
     end
 
     def check
-      json = RestClient.get("http://rubygems.org/api/v1/versions/#{engine.project_name}.json")
+      begin
+        json = RestClient.get("http://rubygems.org/api/v1/versions/#{engine.project_name}.json")
+      rescue RestClient::ResourceNotFound
+        return nil
+      end
       versions = JSON.parse(json)
       versions.each do |version|
         if version["number"] == @engine.version
