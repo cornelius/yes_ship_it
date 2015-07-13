@@ -2,6 +2,30 @@
 
 require_relative("../lib/yes_ship_it.rb")
 
+options = {}
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: yes_ship_it [options]"
+
+  opts.separator ""
+  opts.separator "Specific options:"
+
+  opts.on("--dry-run", "Just pretend. Don't change anything.") do |v|
+    options[:dry_run] = v
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end
+option_parser.parse!
+
+if ARGV.size > 0
+  $stderr.puts "Unrecognized arguments: #{ARGV.join(" ")}"
+  puts option_parser
+  exit 1
+end
+
 puts "Shipping..."
 puts
 
@@ -13,7 +37,7 @@ if !File.exist?(config_file)
 end
 
 engine = YSI::Engine.new
-engine.dry_run = ARGV == ["--dry-run"]
+engine.dry_run = options[:dry_run]
 
 begin
   engine.read(config_file)
