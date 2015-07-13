@@ -33,7 +33,8 @@ end
 if ARGV == ["changelog"]
   engine = YSI::Engine.new
   engine.check_assertion(YSI::Version)
-  system("git log #{engine.tag}..HEAD")
+  tag = `git tag`.split("\n").last
+  system("git log #{tag}..HEAD")
   exit 0
 elsif ARGV.empty?
   puts "Shipping..."
