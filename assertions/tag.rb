@@ -1,11 +1,13 @@
 module YSI
   class Tag < Assertion
+    needs "version"
+
     def display_name
       "tag"
     end
 
     def tag
-      "v#{@engine.version}"
+      @engine.tag
     end
 
     def check

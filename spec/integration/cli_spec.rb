@@ -24,8 +24,7 @@ Warning: use `version` instead of `version_number`.
 
 Checking version number: error
   Expected version in lib/version.rb
-Checking change log: error
-  Expected change log in CHANGELOG.md
+Checking change log: skip (because dependency errored)
 
 Couldn't ship red_herring. Help me.
 EOT
@@ -116,6 +115,80 @@ Did a dry run of shipping red_herring 0.0.1. Nothing was changed.
 EOT
 
       expect(run_command(args: ["--dry-run"],
+        working_directory: File.join(dir, "red_herring"))).
+        to exit_with_success(expected_output)
+    end
+
+    it "checks the change log" do
+      dir = given_directory
+
+      setup_test_git_repo("004", dir)
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: 0.0.2
+Checking change log: error
+  Can't find version 0.0.2 in change log
+Checking built gem: fail
+Checking tag: fail
+
+Couldn't ship red_herring. Help me.
+EOT
+
+      expect(run_command(working_directory: File.join(dir, "red_herring"))).
+        to exit_with_error(1, "", expected_output)
+    end
+
+    it "skips assertions with errored dependencies" do
+      dir = nil
+      given_directory do
+        dir = given_directory "test_project" do
+          given_file("yes_ship_it.conf", from: "yes_ship_it.include.conf")
+        end
+      end
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: error
+  Expected version in lib/version.rb
+Checking change log: skip (because dependency errored)
+Checking tag: skip (because dependency errored)
+Checking built gem: error
+  I need a gemspec: test_project.gemspec
+Checking published gem: skip (because dependency errored)
+Checking pushed tag: skip (because dependency errored)
+
+Couldn't ship test_project. Help me.
+EOT
+
+      expect(run_command(working_directory: dir)).
+        to exit_with_error(1, "", expected_output)
+    end
+  end
+
+  describe "changelog helper" do
+    it "shows changelog since last version" do
+      dir = given_directory
+
+      setup_test_git_repo("005", dir)
+
+      expected_output = <<EOT
+commit 22cb6af3f7ea8385a8d0c62340c99265e0c8a63d
+Author: Cornelius Schumacher <schumacher@kde.org>
+Date:   Fri Jul 10 23:54:01 2015 +0200
+
+    Implement magic method
+
+commit 40ec45663e2a3cf32895b451cc43e667463af431
+Author: Cornelius Schumacher <schumacher@kde.org>
+Date:   Fri Jul 10 23:50:08 2015 +0200
+
+    Add magic method
+EOT
+
+      expect(run_command(args: ["changelog"],
         working_directory: File.join(dir, "red_herring"))).
         to exit_with_success(expected_output)
     end

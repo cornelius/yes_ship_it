@@ -5,18 +5,6 @@ include GivenFilesystemSpecHelpers
 describe YSI::Engine do
   use_given_filesystem
 
-  describe "#class_for_assertion_name" do
-    it "creates VersionNumber class" do
-      expect(YSI::Engine.class_for_assertion_name("version")).
-        to be(YSI::Version)
-    end
-
-    it "creates ChangeLog class" do
-      expect(YSI::Engine.class_for_assertion_name("change_log")).
-        to be(YSI::ChangeLog)
-    end
-  end
-
   describe "#read" do
     it "reads valid configuration" do
       path = nil
@@ -45,6 +33,13 @@ describe YSI::Engine do
         ysi.read(path)
       }.to raise_error YSI::Error
     end
+
+    it "throws error when file does not exist" do
+      ysi = YSI::Engine.new
+      expect {
+        ysi.read("/this/file/does/not/exist.conf")
+      }.to raise_error Errno::ENOENT
+    end
   end
 
   it "runs assertions" do
@@ -64,5 +59,49 @@ describe YSI::Engine do
     ysi.out = StringIO.new
 
     ysi.run
+  end
+
+  it "runs assertion" do
+    ysi = YSI::Engine.new
+
+    expect_any_instance_of(YSI::Version).to receive(:check)
+
+    ysi.check_assertion(YSI::Version)
+  end
+
+  it "provides tag" do
+    ysi = YSI::Engine.new
+    ysi.version = "1.2.3"
+
+    expect(ysi.tag).to eq("v1.2.3")
+  end
+
+  it "loads standard config" do
+    ysi_standard = YSI::Engine.new
+    ysi_standard.read("configs/ruby_gem.conf")
+
+    ysi = YSI::Engine.new
+    ysi.read(given_file("yes_ship_it.include.conf"))
+
+    expect(ysi.assertions.count).to be >= 6
+    ysi_standard.assertions.each_with_index do |assertion, i|
+      expect(assertion.class).to eq(ysi.assertions[i].class)
+    end
+  end
+
+  describe "#dependency_errored?" do
+    it "returns true, if no dependency errored" do
+      engine = YSI::Engine.new
+      errored_assertions = []
+      assertion = YSI::ChangeLog.new(engine)
+      expect(engine.dependency_errored?(assertion, errored_assertions)).to be(false)
+    end
+
+    it "returns false, if a dependency errored" do
+      engine = YSI::Engine.new
+      errored_assertions = [YSI::Version.new(engine)]
+      assertion = YSI::ChangeLog.new(engine)
+      expect(engine.dependency_errored?(assertion, errored_assertions)).to be(true)
+    end
   end
 end

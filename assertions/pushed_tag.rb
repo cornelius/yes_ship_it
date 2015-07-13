@@ -1,11 +1,13 @@
 module YSI
   class PushedTag < Assertion
+    needs "tag"
+
     def display_name
       "pushed tag"
     end
 
     def tag
-      "v#{@engine.version}"
+      @engine.tag
     end
 
     def check

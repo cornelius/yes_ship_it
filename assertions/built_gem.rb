@@ -33,7 +33,8 @@ module YSI
 
     def assert(dry_run: false)
       if !dry_run
-        if !system("gem build #{gemspec_file}")
+        `gem build #{gemspec_file}`
+        if $?.to_i != 0
           return nil
         end
       end

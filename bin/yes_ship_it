@@ -4,8 +4,11 @@ require_relative("../lib/yes_ship_it.rb")
 
 options = {}
 option_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: yes_ship_it [options]"
+  opts.banner = "Usage: yes_ship_it [options] [command]"
 
+  opts.separator ""
+  opts.separator "Commands:"
+  opts.separator "  changelog - show change log since last release"
   opts.separator ""
   opts.separator "Specific options:"
 
@@ -20,15 +23,6 @@ option_parser = OptionParser.new do |opts|
 end
 option_parser.parse!
 
-if ARGV.size > 0
-  $stderr.puts "Unrecognized arguments: #{ARGV.join(" ")}"
-  puts option_parser
-  exit 1
-end
-
-puts "Shipping..."
-puts
-
 config_file = "yes_ship_it.conf"
 
 if !File.exist?(config_file)
@@ -36,14 +30,28 @@ if !File.exist?(config_file)
   exit 1
 end
 
-engine = YSI::Engine.new
-engine.dry_run = options[:dry_run]
+if ARGV == ["changelog"]
+  engine = YSI::Engine.new
+  engine.check_assertion(YSI::Version)
+  system("git log #{engine.tag}..HEAD")
+  exit 0
+elsif ARGV.empty?
+  puts "Shipping..."
+  puts
 
-begin
-  engine.read(config_file)
+  engine = YSI::Engine.new
+  engine.dry_run = options[:dry_run]
 
-  exit engine.run
-rescue YSI::Error => e
-  STDERR.puts e
+  begin
+    engine.read(config_file)
+
+    exit engine.run
+  rescue YSI::Error => e
+    STDERR.puts e
+    exit 1
+  end
+else
+  $stderr.puts "Unrecognized arguments: #{ARGV.join(" ")}"
+  puts option_parser
   exit 1
 end

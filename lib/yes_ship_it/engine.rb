@@ -5,15 +5,6 @@ module YSI
     attr_accessor :out
     attr_accessor :dry_run
 
-    def self.class_for_assertion_name(name)
-      class_name = name.split("_").map { |n| n.capitalize }.join
-      begin
-        Object.const_get("YSI::" + class_name)
-      rescue NameError
-        raise YSI::Error.new("Error: Unknown assertion '#{name}'")
-      end
-    end
-
     def initialize
       @assertions = []
       @out = STDOUT
@@ -22,30 +13,64 @@ module YSI
     def read(filename)
       config = YAML.load_file(filename)
 
-      assertions = config["assertions"]
-      if assertions
-        assertions.each do |assertion|
-          if assertion == "version_number"
-            out.puts "Warning: use `version` instead of `version_number`."
-            out.puts
-            assertion = "version"
-          end
+      config.each do |key,value|
+        if key == "include"
+          included_file = value
+          configs_path = File.expand_path("../../../configs", __FILE__)
+          read(File.join(configs_path, included_file + ".conf"))
+        elsif key == "assertions"
+          assertions = value
+          if assertions
+            assertions.each do |assertion|
+              if assertion == "version_number"
+                out.puts "Warning: use `version` instead of `version_number`."
+                out.puts
+                assertion = "version"
+              end
 
-          @assertions << YSI::Engine.class_for_assertion_name(assertion).new(self)
+              @assertions << YSI::Assertion.class_for_name(assertion).new(self)
+            end
+          end
         end
       end
+    end
+
+    def check_assertion(assertion_class)
+      assertion_class.new(self).check
     end
 
     def project_name
       File.basename(Dir.pwd)
     end
 
+    def tag
+      "v#{version}"
+    end
+
+    def dependency_errored?(assertion, errored_assertions)
+      assertion.needs.each do |need|
+        errored_assertions.each do |errored_assertion|
+          if errored_assertion.class == need
+            return true
+          end
+        end
+      end
+      false
+    end
+
     def run
       failed_assertions = []
       errored_assertions = []
+      skipped_assertions = []
 
       @assertions.each do |assertion|
         out.print "Checking #{assertion.display_name}: "
+        if dependency_errored?(assertion, errored_assertions) ||
+           dependency_errored?(assertion, skipped_assertions)
+          out.puts "skip (because dependency errored)"
+          skipped_assertions << assertion
+          next
+        end
         success = assertion.check
         if success
           out.puts success

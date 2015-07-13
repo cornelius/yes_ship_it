@@ -58,12 +58,12 @@ A more detailed configuration could look like this:
 
 ```yaml
 assertions:
-  ci_green
-  release_notes
-  version_number
-  gem_built
-  release_tagged
-  gem_pushed
+  - ci_green
+  - release_notes
+  - version_number
+  - gem_built
+  - release_tagged
+  - gem_pushed
 ```
 
 There can be more configuration on a general level or the level of the
