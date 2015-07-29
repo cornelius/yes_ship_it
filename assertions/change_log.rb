@@ -2,12 +2,6 @@ module YSI
   class ChangeLog < Assertion
     needs "version"
 
-    attr_reader :error
-
-    def initialize(engine)
-      @engine = engine
-    end
-
     def display_name
       "change log"
     end
