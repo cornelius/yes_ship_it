@@ -17,6 +17,8 @@ module YSI
           @status = "uncommitted changes"
         elsif g =~ /Untracked files/
           @status = "untracked files"
+        elsif g =~ /Changes not staged/
+          @status = "unstaged changes"
         else
           @status = nil
         end
