@@ -154,6 +154,8 @@ Shipping...
 
 Checking release branch: error
   Not on release branch 'master'
+Checking working directory: error
+  untracked files
 Checking version number: error
   Expected version in lib/version.rb
 Checking change log: skip (because dependency errored)
