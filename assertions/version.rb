@@ -1,11 +1,5 @@
 module YSI
   class Version < Assertion
-    attr_accessor :error
-
-    def initialize(engine)
-      @engine = engine
-    end
-
     def display_name
       "version number"
     end

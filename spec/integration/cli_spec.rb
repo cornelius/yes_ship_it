@@ -146,11 +146,16 @@ EOT
         dir = given_directory "test_project" do
           given_file("yes_ship_it.conf", from: "yes_ship_it.include.conf")
         end
+        system("cd #{dir}; git init >/dev/null")
       end
 
       expected_output = <<EOT
 Shipping...
 
+Checking release branch: error
+  Not on release branch 'master'
+Checking working directory: error
+  untracked files
 Checking version number: error
   Expected version in lib/version.rb
 Checking change log: skip (because dependency errored)

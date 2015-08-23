@@ -1,11 +1,5 @@
 module YSI
   class BuiltGem < Assertion
-    attr_accessor :error
-
-    def initialize(engine)
-      @engine = engine
-    end
-
     def display_name
       "built gem"
     end
