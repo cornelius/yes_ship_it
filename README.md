@@ -96,7 +96,15 @@ You get basic documentation from the tool itself by executing
 `yes_ship_it help`. There also is a simple man page with some pointers.
 
 The main documentation with details about different scenarios how `yes_ship_it`
-can be used is maintained in the Wiki. You are welcome to contribute there.
+can be used is maintained in the
+[Wiki](https://github.com/cornelius/yes_ship_it/wiki). You are welcome to
+contribute there.
+
+## Users
+
+There is a list of [users of yes_ship_it](https://github.com/cornelius/yes_ship_it/blob/master/USERS.md).
+I'm happy to add you there. Just send me a pull requests for the `USERS.md`
+file.
 
 ## License
 
