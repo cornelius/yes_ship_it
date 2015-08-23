@@ -1,11 +1,12 @@
 module YSI
   class Version < Assertion
+    parameter :version_file, "lib/version.rb"
+
     def display_name
       "version number"
     end
 
     def check
-      version_file = "lib/version.rb"
       if !File.exist?(version_file)
         @error = "Expected version in #{version_file}"
         return nil

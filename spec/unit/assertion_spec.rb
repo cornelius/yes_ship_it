@@ -13,9 +13,10 @@ describe YSI::Assertion do
     end
   end
 
-  describe "parameter" do
+  describe "parameters" do
     class MyAssertion < YSI::Assertion
       parameter :some_thing
+      parameter :some_other_thing, "default_hello"
 
       def display_name
         "My Assertion"
@@ -32,6 +33,11 @@ describe YSI::Assertion do
       my = MyAssertion.new(YSI::Engine.new)
       my.some_thing = "hello"
       expect(my.some_thing).to eq("hello")
+    end
+
+    it "has default value for parameter" do
+      my = MyAssertion.new(YSI::Engine.new)
+      expect(my.some_other_thing).to eq("default_hello")
     end
 
     it "reads parameter from config" do

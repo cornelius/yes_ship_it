@@ -23,19 +23,30 @@ module YSI
       @dependency_names || []
     end
 
-    def self.parameter(name)
+    def self.parameter(name, default_value = nil)
       define_method("#{name}=") do |value|
         @parameters[name] = value
       end
 
+      if default_value
+        define_method("#{name}_default") do
+          return default_value
+        end
+      end
+
       define_method("#{name}") do
-        return @parameters[name]
+        if @parameters.has_key?(name)
+          return @parameters[name]
+        else
+          return send("#{name}_default")
+        end
       end
     end
 
     def initialize(engine)
       @engine = engine
       @parameters = {}
+      @parameter_defaults = {}
     end
 
     def needs
