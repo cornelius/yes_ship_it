@@ -12,4 +12,39 @@ describe YSI::Assertion do
         to be(YSI::ChangeLog)
     end
   end
+
+  describe "parameter" do
+    class MyAssertion < YSI::Assertion
+      parameter :some_thing
+
+      def display_name
+        "My Assertion"
+      end
+
+      def check
+      end
+
+      def assert
+      end
+    end
+
+    it "has methods for parameter" do
+      my = MyAssertion.new(YSI::Engine.new)
+      my.some_thing = "hello"
+      expect(my.some_thing).to eq("hello")
+    end
+
+    it "reads parameter from config" do
+      config = <<EOT
+assertions:
+  my_assertion:
+    some_thing: world
+EOT
+      engine = YSI::Engine.new
+      engine.read_config(config)
+      my = engine.assertions.first
+
+      expect(my.some_thing).to eq("world")
+    end
+  end
 end

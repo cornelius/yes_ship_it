@@ -23,8 +23,19 @@ module YSI
       @dependency_names || []
     end
 
+    def self.parameter(name)
+      define_method("#{name}=") do |value|
+        @parameters[name] = value
+      end
+
+      define_method("#{name}") do
+        return @parameters[name]
+      end
+    end
+
     def initialize(engine)
       @engine = engine
+      @parameters = {}
     end
 
     def needs

@@ -10,9 +10,17 @@ module YSI
       @out = STDOUT
     end
 
+    def read_config(yaml)
+      config = YAML.load(yaml)
+      parse(config)
+    end
+
     def read(filename)
       config = YAML.load_file(filename)
+      parse(config)
+    end
 
+    def parse(config)
       config.each do |key,value|
         if key == "include"
           included_file = value
@@ -21,14 +29,20 @@ module YSI
         elsif key == "assertions"
           assertions = value
           if assertions
-            assertions.each do |assertion|
-              if assertion == "version_number"
+            assertions.each do |assertion_name, parameters|
+              if assertion_name == "version_number"
                 out.puts "Warning: use `version` instead of `version_number`."
                 out.puts
-                assertion = "version"
+                assertion_name = "version"
               end
 
-              @assertions << YSI::Assertion.class_for_name(assertion).new(self)
+              assertion = YSI::Assertion.class_for_name(assertion_name).new(self)
+              if parameters
+                parameters.each do |parameter_name, parameter_value|
+                  assertion.send(parameter_name + "=", parameter_value)
+                end
+              end
+              @assertions << assertion
             end
           end
         end

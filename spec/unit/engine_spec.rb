@@ -5,6 +5,20 @@ include GivenFilesystemSpecHelpers
 describe YSI::Engine do
   use_given_filesystem
 
+  describe "#read_config" do
+    it "reads valid configuration" do
+      config = <<EOT
+assertions:
+  version:
+EOT
+
+      ysi = YSI::Engine.new
+      ysi.read_config(config)
+      expect(ysi.assertions.count).to eq(1)
+      expect(ysi.assertions.first.class).to eq(YSI::Version)
+    end
+  end
+
   describe "#read" do
     it "reads valid configuration" do
       path = nil
