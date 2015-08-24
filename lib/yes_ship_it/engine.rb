@@ -4,10 +4,12 @@ module YSI
     attr_accessor :version, :tag_date
     attr_accessor :out
     attr_accessor :dry_run
+    attr_accessor :data_dir
 
     def initialize
       @assertions = []
       @out = STDOUT
+      @data_dir = File.expand_path("~/.ysi")
     end
 
     def read_config(yaml)

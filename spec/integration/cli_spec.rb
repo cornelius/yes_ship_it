@@ -171,6 +171,54 @@ EOT
       expect(run_command(working_directory: dir)).
         to exit_with_error(1, "", expected_output)
     end
+
+    it "creates release archive" do
+      git_dir = given_directory
+      setup_test_git_repo("006", git_dir)
+
+      data_dir = given_directory
+
+      expected_output = <<EOT
+Shipping...
+
+Checking version number: 0.0.2
+Checking tag: fail
+Checking release archive: fail
+
+Asserting tag: v0.0.2
+Asserting release archive: red_herring-0.0.2.tar.gz
+
+Shipped red_herring 0.0.2. Hooray!
+EOT
+
+      expect(run_command(args: ["--data-dir=#{data_dir}"],
+        working_directory: File.join(git_dir, "red_herring"))).
+        to exit_with_success(expected_output)
+
+      release_archive = File.join(data_dir, "release_archives", "red_herring",
+        "4ba08cb0f26d813cd754bc9ccb9f89274f24f2b6",
+        "red_herring-0.0.2.tar.gz")
+
+      expect(File.exist?(File.join(git_dir, "red_herring", "red_herring-0.0.2"))).to be(false)
+
+      expect(File.exist?(release_archive)).to be(true)
+
+      expected_file_list = <<EOT
+red_herring-0.0.2/
+red_herring-0.0.2/bin/
+red_herring-0.0.2/bin/tickle
+red_herring-0.0.2/CHANGELOG.md
+red_herring-0.0.2/Gemfile
+red_herring-0.0.2/red_herring.gemspec
+red_herring-0.0.2/MIT-LICENSE
+red_herring-0.0.2/README.md
+red_herring-0.0.2/lib/
+red_herring-0.0.2/lib/red_herring.rb
+red_herring-0.0.2/lib/version.rb
+EOT
+      file_list = `tar tzf #{release_archive}`
+      expect(file_list).to eq(expected_file_list)
+    end
   end
 
   describe "changelog helper" do

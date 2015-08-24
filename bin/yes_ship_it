@@ -16,6 +16,10 @@ option_parser = OptionParser.new do |opts|
     options[:dry_run] = v
   end
 
+  opts.on("--data-dir=DIR", "Set directory for storing internal data") do |v|
+    options[:data_dir] = v
+  end
+
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
     exit
@@ -42,6 +46,7 @@ elsif ARGV.empty?
 
   engine = YSI::Engine.new
   engine.dry_run = options[:dry_run]
+  engine.data_dir = options[:data_dir] if options[:data_dir]
 
   begin
     engine.read(config_file)
