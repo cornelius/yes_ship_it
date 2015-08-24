@@ -8,3 +8,4 @@ affect you.
 * [yes_ship_it](https://github.com/cornelius/yes_ship_it)
 * [Trollolo](https://github.com/openSUSE/trollolo)
 * [Inqlude](https://github.com/cornelius/inqlude) ([Contact](mailto:schumacher@kde.org))
+* [cli_tester](https://github.com/cornelius/cli_tester)
