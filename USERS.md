@@ -9,3 +9,4 @@ affect you.
 * [Trollolo](https://github.com/openSUSE/trollolo)
 * [Inqlude](https://github.com/cornelius/inqlude) ([Contact](mailto:schumacher@kde.org))
 * [cli_tester](https://github.com/cornelius/cli_tester)
+* [Mycroft](https://github.com/cornelius/mycroft)
