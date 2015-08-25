@@ -1,0 +1,11 @@
+# Header of artificial RPM spec file snippet
+
+Name:           go-mycroft
+Version:        <%= version %>
+Release:        0
+Source:         <%= release_archive %>
+
+%prep
+%setup -q -n <%= release_directory %>
+
+%changelog

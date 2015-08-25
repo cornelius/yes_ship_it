@@ -1,6 +1,9 @@
 require "yaml"
 require "rest-client"
 require "optparse"
+require "inifile"
+require "rexml/document"
+require "erb"
 
 require_relative "yes_ship_it/assertion.rb"
 require_relative "yes_ship_it/engine.rb"

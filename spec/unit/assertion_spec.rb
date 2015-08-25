@@ -40,6 +40,11 @@ describe YSI::Assertion do
       expect(my.some_other_thing).to eq("default_hello")
     end
 
+    it "returns nil when parameter is not set" do
+      my = MyAssertion.new(YSI::Engine.new)
+      expect(my.some_thing).to be(nil)
+    end
+
     it "reads parameter from config" do
       config = <<EOT
 assertions:

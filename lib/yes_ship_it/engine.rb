@@ -1,7 +1,7 @@
 module YSI
   class Engine
     attr_reader :assertions
-    attr_accessor :version, :tag_date
+    attr_accessor :version, :tag_date, :release_archive
     attr_accessor :out
     attr_accessor :dry_run
     attr_accessor :data_dir
@@ -61,6 +61,10 @@ module YSI
 
     def tag
       "v#{version}"
+    end
+
+    def release_archive_file_name
+      File.basename(release_archive)
     end
 
     def dependency_errored?(assertion, errored_assertions)

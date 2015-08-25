@@ -18,6 +18,7 @@ module YSI
     end
 
     def check
+      engine.release_archive = release_archive
       if File.exist?(release_archive)
         return filename
       end

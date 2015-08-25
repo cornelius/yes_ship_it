@@ -38,7 +38,11 @@ module YSI
         if @parameters.has_key?(name)
           return @parameters[name]
         else
-          return send("#{name}_default")
+          if respond_to?("#{name}_default")
+            return send("#{name}_default")
+          else
+            return nil
+          end
         end
       end
     end

@@ -1,0 +1,8 @@
+[general]
+# URL to access API server, e.g. https://api.opensuse.org
+# you also need a section [https://api.opensuse.org] with the credentials
+apiurl = https://api.opensuse.org
+
+[https://api.opensuse.org]
+user = myuser
+pass = mypassword
