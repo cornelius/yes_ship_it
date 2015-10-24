@@ -216,8 +216,8 @@ red_herring-0.0.2/lib/
 red_herring-0.0.2/lib/red_herring.rb
 red_herring-0.0.2/lib/version.rb
 EOT
-      file_list = `tar tzf #{release_archive}`
-      expect(file_list).to eq(expected_file_list)
+      file_list = `tar tzf #{release_archive}`.split("\n").sort
+      expect(file_list).to eq(expected_file_list.split("\n").sort)
     end
   end
 
