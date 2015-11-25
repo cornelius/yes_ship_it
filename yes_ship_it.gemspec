@@ -23,4 +23,6 @@ Gem::Specification.new do |s|
 
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
+
+  s.executables = ["yes_ship_it"]
 end
