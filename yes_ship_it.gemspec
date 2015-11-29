@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "yes_ship_it"
 
   s.add_runtime_dependency "inifile"
+  s.add_runtime_dependency "rest-client"
 
   s.add_development_dependency "rspec", "~>3"
   s.add_development_dependency "given_filesystem"
