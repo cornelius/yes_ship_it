@@ -44,7 +44,7 @@ EOT
     out = double
     allow(out).to receive(:puts)
 
-    test = Httpotemkin::Test.new()
+    test = Httpotemkin::Test.new(out: out)
     test.add_server("rubygems")
     test.add_server("api.rubygems")
     test.add_server("obs")
@@ -56,8 +56,6 @@ EOT
       checkout_tar = File.expand_path("../data/red_herring-checkout-push.tar.gz", __FILE__)
       client.inject_tarball(remote_tar)
       client.inject_tarball(checkout_tar)
-
-#      binding.pry
 
       client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
 
@@ -87,7 +85,7 @@ EOT
     out = double
     allow(out).to receive(:puts)
 
-    test = Httpotemkin::Test.new()
+    test = Httpotemkin::Test.new(out: out)
     test.add_server("rubygems")
     test.add_server("api.rubygems")
     test.add_server("obs")
@@ -100,8 +98,6 @@ EOT
       client.inject_tarball(remote_tar)
       client.inject_tarball(checkout_tar)
 
-#      binding.pry
-
       client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
 
       expect(client.exit_code).to eq(0)
@@ -111,11 +107,9 @@ Shipping...
 
 Checking version number: 0.0.1
 Checking built gem: red_herring-0.0.1.gem
-Checking published gem: red_herring-0.0.1.gem
+Checking published gem: 0.0.1
 
-Asserting built gem: red_herring-0.0.1.gem
-
-Shipped red_herring 0.0.1. Hooray!
+red_herring 0.0.1 already shipped
 EOT
       expect(client.out).to eq(expected_output)
 
