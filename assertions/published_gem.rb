@@ -12,7 +12,7 @@ module YSI
 
     def check
       begin
-        json = RestClient.get("http://rubygems.org/api/v1/versions/#{engine.project_name}.json")
+        json = RestClient.get("https://rubygems.org/api/v1/versions/#{engine.project_name}.json")
       rescue RestClient::ResourceNotFound
         return nil
       end
