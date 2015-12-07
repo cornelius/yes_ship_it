@@ -9,6 +9,7 @@ option_parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Commands:"
   opts.separator "  changelog - show change log since last release"
+  opts.separator "  init      - initialize directory for shipping with yes_ship_it"
   opts.separator ""
   opts.separator "Specific options:"
 
@@ -29,18 +30,29 @@ option_parser.parse!
 
 config_file = "yes_ship_it.conf"
 
-if !File.exist?(config_file)
-  STDERR.puts("Unable to find file `yes_ship_it.conf`. I need it.")
-  exit 1
-end
-
 if ARGV == ["changelog"]
   engine = YSI::Engine.new
   engine.check_assertion(YSI::Version)
   tag = `git tag`.split("\n").last
   system("git log #{tag}..HEAD")
   exit 0
+elsif ARGV == ["init"]
+  File.open("yes_ship_it.conf", "w") do |file|
+    file.puts "# Experimental release automation. See https://github.com/cornelius/yes_ship_it."
+    file.puts "include:"
+    file.puts "  ruby_gem"
+  end
+  puts "Initialized directory for shipping."
+  puts
+  puts "Check the file `yes_ship_it.conf` and adapt it to your needs."
+  puts
+  puts "Happy shipping!"
 elsif ARGV.empty?
+  if !File.exist?(config_file)
+    STDERR.puts("Unable to find file `yes_ship_it.conf`. I need it.")
+    exit 1
+  end
+
   puts "Shipping..."
   puts
 

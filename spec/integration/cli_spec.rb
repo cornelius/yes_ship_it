@@ -246,4 +246,25 @@ EOT
         to exit_with_success(expected_output)
     end
   end
+
+  describe "init" do
+    it "initializes directory with generic template" do
+      dir = given_directory
+
+      expected_output = <<EOT
+Initialized directory for shipping.
+
+Check the file `yes_ship_it.conf` and adapt it to your needs.
+
+Happy shipping!
+EOT
+
+      expect(run_command(args: ["init"], working_directory: dir)).
+        to exit_with_success(expected_output)
+
+      expect(File.read(File.join(dir, "yes_ship_it.conf"))).to eq(
+       "# Experimental release automation. See https://github.com/cornelius/yes_ship_it.\ninclude:\n  ruby_gem\n"
+      )
+    end
+  end
 end
