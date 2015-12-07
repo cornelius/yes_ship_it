@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~>3"
   s.add_development_dependency "given_filesystem"
   s.add_development_dependency "cli_tester", ">= 0.0.2"
+  s.add_development_dependency "httpotemkin"
 
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
