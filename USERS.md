@@ -10,3 +10,4 @@ affect you.
 * [Inqlude](https://github.com/cornelius/inqlude) ([Contact](mailto:schumacher@kde.org))
 * [cli_tester](https://github.com/cornelius/cli_tester)
 * [Mycroft](https://github.com/cornelius/mycroft)
+* [Httpotemkin](https://github.com/cornelius/httpotemkin)
