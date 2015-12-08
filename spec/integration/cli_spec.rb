@@ -164,6 +164,7 @@ Checking built gem: error
   I need a gemspec: test_project.gemspec
 Checking published gem: skip (because dependency errored)
 Checking pushed tag: skip (because dependency errored)
+Checking pushed to yes-it-shipped: fail
 
 Couldn't ship test_project. Help me.
 EOT
