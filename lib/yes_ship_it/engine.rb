@@ -59,6 +59,26 @@ module YSI
       File.basename(Dir.pwd)
     end
 
+    def github_project_name
+      if !@github_project_name
+        origin = Git.new.origin
+        @github_project_name = origin.match("git@github.com:(.*)")[1]
+      end
+      @github_project_name
+    end
+
+    def project_url
+      "https://github.com/#{github_project_name}"
+    end
+
+    def release_url
+      "https://github.com/#{github_project_name}/releases/tag/#{tag}"
+    end
+
+    def config_url
+      "https://raw.githubusercontent.com/#{github_project_name}/master/yes_ship_it.conf"
+    end
+
     def tag
       "v#{version}"
     end

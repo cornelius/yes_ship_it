@@ -118,4 +118,35 @@ EOT
       expect(engine.dependency_errored?(assertion, errored_assertions)).to be(true)
     end
   end
+
+  describe "release attributes" do
+    before(:each) do
+      @checkout_dir = given_directory
+      setup_test_git_repo("005", @checkout_dir)
+      @pwd = Dir.pwd
+      Dir.chdir(File.join(@checkout_dir, "red_herring"))
+      @engine = YSI::Engine.new
+      @engine.version = "1.0.0"
+    end
+
+    after(:each) do
+      Dir.chdir(@pwd)
+    end
+
+    it "#project_name" do
+      expect(@engine.project_name).to eq("red_herring")
+    end
+
+    it "#project_url" do
+      expect(@engine.project_url).to eq("https://github.com/cornelius/red_herring")
+    end
+
+    it "#release_url" do
+      expect(@engine.release_url).to eq("https://github.com/cornelius/red_herring/releases/tag/v1.0.0")
+    end
+
+    it "#config_url" do
+      expect(@engine.config_url).to eq("https://raw.githubusercontent.com/cornelius/red_herring/master/yes_ship_it.conf")
+    end
+  end
 end
