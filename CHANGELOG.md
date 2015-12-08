@@ -1,5 +1,16 @@
 # Change log of yes_ship_it
 
+## Version 0.0.4
+
+* Add yes_it_shipped assertion
+
+  This assertion publishes the release on a central server we have set up for
+  the yes_ship_it project. It currently runs at
+  https://yes-it-shipped.herokuapp.com.
+
+  The assertion is used, if you either explicitly put it in your configuration
+  or if you include the `rubygems` template.
+
 ## Version 0.0.3
 
 * Implement minimal version of `yes_ship_it init`. The init command is supposed
