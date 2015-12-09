@@ -3,14 +3,25 @@ require_relative "spec_helper"
 include GivenFilesystemSpecHelpers
 
 describe YSI::Git do
-  it "#origin" do
-    allow(subject).to receive(:run_git).with("remote -v").and_return(<<EOT
+  describe "#origin" do
+
+    it "grabs the url without the extension" do
+      allow(subject).to receive(:run_git).with("remote -v").and_return(<<EOT
 origin  git@github.com:cornelius/red_herring (fetch)
 origin  git@github.com:cornelius/red_herring (push)
 EOT
-    )
+      )
+      expect(subject.origin).to eq("git@github.com:cornelius/red_herring")
+    end
 
-    expect(subject.origin).to eq("git@github.com:cornelius/red_herring")
+    it "grabs the url with the extension" do
+      allow(subject).to receive(:run_git).with("remote -v").and_return(<<EOT
+origin  git@github.com:cornelius/red_herring.git (fetch)
+origin  git@github.com:cornelius/red_herring.git (push)
+EOT
+      )
+      expect(subject.origin).to eq("git@github.com:cornelius/red_herring")
+    end
   end
 
   describe "#needs_push?" do

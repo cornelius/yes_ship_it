@@ -11,7 +11,7 @@ module YSI
     end
 
     def origin
-      run_git("remote -v").match(/origin\s+(.*)\s+\(push\)/)[1]
+      run_git("remote -v").match(/origin\s+(.*?)(\.git)?\s+\(push\)/)[1]
     end
 
     def needs_push?
