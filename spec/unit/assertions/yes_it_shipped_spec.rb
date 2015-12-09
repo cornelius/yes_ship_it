@@ -42,7 +42,6 @@ EOT
 
   describe "#assert" do
     it "pushes release" do
-      allow(Time).to receive(:now).and_return(Time.parse("20151208T141655+0100"))
       stub_request(:post, "https://yes-it-shipped.herokuapp.com/releases").
         with(
           :body => {
@@ -64,6 +63,7 @@ EOT
       engine = YSI::Engine.new
       allow(engine).to receive(:project_name).and_return("dummy")
       engine.version = "1.1.1"
+      engine.tag_date = Time.parse("20151208T141655+0100")
 
       assertion = YSI::YesItShipped.new(engine)
 
