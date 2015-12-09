@@ -9,6 +9,8 @@ describe "ship ruby gem" do
     @test.add_server("obs")
     @test.up
     @client = @test.start_client
+    remote_tar = File.expand_path("../data/red_herring-remote.tar.gz", __FILE__)
+    @client.inject_tarball(remote_tar)
   end
 
   after(:all) do
@@ -18,9 +20,7 @@ describe "ship ruby gem" do
   it "builds gem" do
     @client.install_gem_from_spec("yes_ship_it.gemspec")
 
-    remote_tar = File.expand_path("../data/red_herring-remote.tar.gz", __FILE__)
     checkout_tar = File.expand_path("../data/red_herring-checkout-build.tar.gz", __FILE__)
-    @client.inject_tarball(remote_tar)
     @client.inject_tarball(checkout_tar)
 
     @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
@@ -47,9 +47,7 @@ EOT
   it "pushes gem if it isn't pushed yet" do
     @client.install_gem_from_spec("yes_ship_it.gemspec")
 
-    remote_tar = File.expand_path("../data/red_herring-remote.tar.gz", __FILE__)
     checkout_tar = File.expand_path("../data/red_herring-checkout-push.tar.gz", __FILE__)
-    @client.inject_tarball(remote_tar)
     @client.inject_tarball(checkout_tar)
 
     @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
@@ -78,9 +76,7 @@ EOT
   it "doesn't push gem if it already is pushed" do
     @client.install_gem_from_spec("yes_ship_it.gemspec")
 
-    remote_tar = File.expand_path("../data/red_herring-remote.tar.gz", __FILE__)
     checkout_tar = File.expand_path("../data/red_herring-checkout-not-push.tar.gz", __FILE__)
-    @client.inject_tarball(remote_tar)
     @client.inject_tarball(checkout_tar)
 
     @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
