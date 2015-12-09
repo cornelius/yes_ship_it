@@ -21,7 +21,7 @@ EOT
       setup_test_git_repo("007", dir)
       git = YSI::Git.new(File.join(dir, "red_herring"))
 
-      expect(subject.needs_push?).to be(true)
+      expect(git.needs_push?).to be(true)
     end
 
     it "returns false if local changes are in remote branch" do
