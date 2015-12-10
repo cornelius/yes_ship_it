@@ -1,5 +1,15 @@
 # Change log of yes_ship_it
 
+## Version 0.0.5
+
+* Handle missing credentials for Rubygems, when pushing gems
+* Handle the case when the origin in your git configuration includes the .git
+  extension
+* When pushing to yes_it_shipped use the date is when the release happened not
+  when the release was pushed to the site (Issue #9)
+* Add assertion `pushed_code` to check, if the released has been pushed to the
+  remote repository
+
 ## Version 0.0.4
 
 * Add yes_it_shipped assertion
