@@ -165,7 +165,7 @@ Checking built gem: error
 Checking published gem: skip (because dependency errored)
 Checking pushed tag: skip (because dependency errored)
 Checking pushed code: skip (because dependency errored)
-Checking pushed to yes-it-shipped: fail
+Checking pushed to yes-it-shipped: skip (because dependency errored)
 
 Couldn't ship test_project. Help me.
 EOT
