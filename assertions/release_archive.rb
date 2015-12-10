@@ -34,7 +34,9 @@ module YSI
           FileUtils.mkdir_p(File.dirname(release_archive))
           excludes = [".git", ".gitignore", "yes_ship_it.conf"]
           exclude_options = excludes.map { |e| "--exclude '#{e}'" }.join(" ")
-          system("cd #{tmp_dir}; tar czf #{release_archive} #{exclude_options} #{archive_dir}")
+          if !system("cd #{tmp_dir}; tar czf #{release_archive} #{exclude_options} #{archive_dir}")
+            return nil
+          end
         end
       end
       filename

@@ -147,6 +147,10 @@ module YSI
             out.print "Asserting #{assertion.display_name}: "
             success = assertion.assert(dry_run: dry_run)
             if !success
+              if assertion.error
+                out.puts "error"
+                out.puts "  " + assertion.error
+              end
               out.puts
               out.puts "Ran into an error. Stopping shipping."
               return 1
