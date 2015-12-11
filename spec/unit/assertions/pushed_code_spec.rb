@@ -14,7 +14,7 @@ describe YSI::PushedCode do
     assertion = YSI::PushedCode.new(engine)
     Dir.chdir(File.join(dir, "red_herring")) do
       expect(assertion.check).to be(nil)
-      expect(assertion.assert).to eq "pushed"
+      expect(assertion.assert(engine.executor)).to eq "pushed"
     end
   end
 end

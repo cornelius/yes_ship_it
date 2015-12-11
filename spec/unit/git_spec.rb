@@ -4,9 +4,10 @@ include GivenFilesystemSpecHelpers
 
 describe YSI::Git do
   describe "#origin" do
+    subject { YSI::Git.new(YSI::Executor.new) }
 
     it "grabs the url without the extension" do
-      allow(subject).to receive(:run_git).with("remote -v").and_return(<<EOT
+      allow(subject).to receive(:run_git).with(["remote","-v"]).and_return(<<EOT
 origin  git@github.com:cornelius/red_herring (fetch)
 origin  git@github.com:cornelius/red_herring (push)
 EOT
@@ -15,7 +16,7 @@ EOT
     end
 
     it "grabs the url with the extension" do
-      allow(subject).to receive(:run_git).with("remote -v").and_return(<<EOT
+      allow(subject).to receive(:run_git).with(["remote","-v"]).and_return(<<EOT
 origin  git@github.com:cornelius/red_herring.git (fetch)
 origin  git@github.com:cornelius/red_herring.git (push)
 EOT
@@ -30,7 +31,7 @@ EOT
     it "returns true if local changes are not in remote branch" do
       dir = given_directory
       setup_test_git_repo("007", dir)
-      git = YSI::Git.new(File.join(dir, "red_herring"))
+      git = YSI::Git.new(YSI::Executor.new, File.join(dir, "red_herring"))
 
       expect(git.needs_push?).to be(true)
     end
@@ -38,7 +39,7 @@ EOT
     it "returns false if local changes are in remote branch" do
       dir = given_directory
       setup_test_git_repo("008", dir)
-      git = YSI::Git.new(File.join(dir, "red_herring"))
+      git = YSI::Git.new(YSI::Executor.new, File.join(dir, "red_herring"))
 
       expect(git.needs_push?).to be(false)
     end

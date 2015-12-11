@@ -25,19 +25,13 @@ module YSI
       nil
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        begin
-          if !File.exist?(File.expand_path("~/.gem/credentials"))
-            @error = "You need to log in to Rubygems first by running `gem push #{gem_file}` manually"
-            return nil
-          end
-          Cheetah.run(["gem", "push", gem_file])
-        rescue Cheetah::ExecutionFailed => e
-          @error = e.message
-          return nil
-        end
+    def assert(executor)
+      if !File.exist?(File.expand_path("~/.gem/credentials"))
+        raise AssertError.new("You need to log in to Rubygems first by running `gem push #{gem_file}` manually")
       end
+
+      executor.run_command(["gem", "push", gem_file])
+
       gem_file
     end
   end

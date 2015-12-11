@@ -25,19 +25,14 @@ module YSI
       nil
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        Dir.mktmpdir do |tmp_dir|
-          archive_dir = "#{engine.project_name}-#{engine.version}"
-          cmd = "git clone #{Dir.pwd} #{File.join(tmp_dir, archive_dir)} 2>/dev/null"
-          system(cmd)
-          FileUtils.mkdir_p(File.dirname(release_archive))
-          excludes = [".git", ".gitignore", "yes_ship_it.conf"]
-          exclude_options = excludes.map { |e| "--exclude '#{e}'" }.join(" ")
-          if !system("cd #{tmp_dir}; tar czf #{release_archive} #{exclude_options} #{archive_dir}")
-            return nil
-          end
-        end
+    def assert(executor)
+      Dir.mktmpdir do |tmp_dir|
+        archive_dir = "#{engine.project_name}-#{engine.version}"
+        executor.run_command(["git", "clone", Dir.pwd, File.join(tmp_dir, archive_dir)])
+        FileUtils.mkdir_p(File.dirname(release_archive))
+        excludes = [".git", ".gitignore", "yes_ship_it.conf"]
+        exclude_options = excludes.map { |e| ["--exclude", e] }.flatten
+        executor.run_command(["tar", "czf", release_archive] + exclude_options + [archive_dir], working_directory: tmp_dir)
       end
       filename
     end

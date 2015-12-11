@@ -30,7 +30,7 @@ module YSI
       end
     end
 
-    def assert(dry_run: false)
+    def assert(_executor)
       branch
     end
   end

@@ -24,10 +24,8 @@ module YSI
       return nil
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        `git tag -a #{tag} -m "Version #{@engine.version}"`
-      end
+    def assert(executor)
+      executor.run_command(["git", "tag", "-a", tag, "-m", engine.version])
       tag
     end
   end

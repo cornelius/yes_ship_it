@@ -21,7 +21,7 @@ module YSI
       nil
     end
 
-    def assert(dry_run: false)
+    def assert(_executor)
     end
 
     def parse_version(file_name)

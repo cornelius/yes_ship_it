@@ -15,8 +15,8 @@ module YSI
       end
     end
 
-    def assert(dry_run: false)
-      if !dry_run
+    def assert(executor)
+      if !engine.dry_run?
         begin
           RestClient.post("https://yes-it-shipped.herokuapp.com/releases",
             project: engine.project_name, version: engine.version,

@@ -20,7 +20,7 @@ module YSI
       "CHANGELOG.md"
     end
 
-    def assert(dry_run: false)
+    def assert(_executor)
     end
 
     def check_content(content)

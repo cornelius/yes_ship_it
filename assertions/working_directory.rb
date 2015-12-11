@@ -35,7 +35,7 @@ module YSI
       end
     end
 
-    def assert(dry_run: false)
+    def assert(_executor)
       "clean"
     end
   end

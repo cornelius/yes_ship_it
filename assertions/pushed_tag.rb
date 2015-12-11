@@ -19,10 +19,8 @@ module YSI
       nil
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        `git push --tags`
-      end
+    def assert(executor)
+      executor.run_command(["git", "push", "--tags"])
       tag
     end
   end

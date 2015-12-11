@@ -25,13 +25,8 @@ module YSI
       gem_file
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        `gem build #{gemspec_file}`
-        if $?.to_i != 0
-          return nil
-        end
-      end
+    def assert(executor)
+      executor.run_command(["gem", "build", gemspec_file])
       gem_file
     end
   end

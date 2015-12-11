@@ -7,17 +7,15 @@ module YSI
     end
 
     def check
-      if Git.new.needs_push?
+      if Git.new(Executor.new).needs_push?
         return nil
       else
         return "up-to-date"
       end
     end
 
-    def assert(dry_run: false)
-      if !dry_run
-        Git.new.push
-      end
+    def assert(executor)
+      Git.new(executor).push
       return "pushed"
     end
   end

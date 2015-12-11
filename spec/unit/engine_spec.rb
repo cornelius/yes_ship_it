@@ -149,4 +149,20 @@ EOT
       expect(@engine.config_url).to eq("https://raw.githubusercontent.com/cornelius/red_herring/master/yes_ship_it.conf")
     end
   end
+
+  describe "dry run" do
+    it "creates real executor by default" do
+      expect(subject.executor.class).to be(YSI::Executor)
+    end
+
+    it "sets dry run" do
+      subject.dry_run = true
+      expect(subject.executor.class).to be(YSI::DryExecutor)
+    end
+
+    it "unsets dry run" do
+      subject.dry_run = false
+      expect(subject.executor.class).to be(YSI::Executor)
+    end
+  end
 end

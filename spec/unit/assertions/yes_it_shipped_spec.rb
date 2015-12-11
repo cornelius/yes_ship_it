@@ -67,7 +67,7 @@ EOT
 
       assertion = YSI::YesItShipped.new(engine)
 
-      expect(assertion.assert).to eq("dummy-1.1.1")
+      expect(assertion.assert(engine.executor)).to eq("dummy-1.1.1")
     end
   end
 end

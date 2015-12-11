@@ -85,7 +85,7 @@ module YSI
       nil
     end
 
-    def assert(dry_run: false)
+    def assert(executor)
       engine.out.puts "..."
 
       old_files = []
@@ -96,7 +96,7 @@ module YSI
       end
 
       engine.out.puts "  Uploading release archive '#{archive_file_name}'"
-      if !dry_run
+      if !engine.dry_run?
         url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{archive_file_name}"
         file = File.new(engine.release_archive, "rb")
         begin
@@ -108,7 +108,7 @@ module YSI
 
       spec_file = engine.project_name + ".spec"
       engine.out.puts "  Uploading spec file '#{spec_file}'"
-      if !dry_run
+      if !engine.dry_run?
         url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{spec_file}"
         content = create_spec_file("rpm/#{spec_file}.erb")
         begin
@@ -120,7 +120,7 @@ module YSI
 
       old_files.each do |file|
         engine.out.puts "  Removing '#{file}'"
-        if !dry_run
+        if !engine.dry_run?
           url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{file}"
           RestClient.delete(url)
         end

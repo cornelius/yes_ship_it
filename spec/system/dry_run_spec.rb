@@ -52,8 +52,8 @@ Dry run: Asserting pushed code: pushed
 
 Did a dry run of shipping red_herring 0.0.2. Nothing was changed.
 EOT
-    expect(@client.out).to eq(expected_output)
     expect(@client.err).to eq("")
+    expect(@client.out).to eq(expected_output)
     expect(@client.exit_code).to eq(0)
   end
 end

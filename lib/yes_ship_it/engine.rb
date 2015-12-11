@@ -1,15 +1,28 @@
 module YSI
   class Engine
     attr_reader :assertions
+    attr_reader :executor
     attr_accessor :version, :tag_date, :release_archive
     attr_accessor :out
-    attr_accessor :dry_run
     attr_accessor :data_dir
 
     def initialize
       @assertions = []
       @out = STDOUT
       @data_dir = File.expand_path("~/.ysi")
+      self.dry_run = false
+    end
+
+    def dry_run=(dry_run)
+      if dry_run
+        @executor = DryExecutor.new
+      else
+        @executor = Executor.new
+      end
+    end
+
+    def dry_run?
+      @executor.is_a?(DryExecutor)
     end
 
     def read_config(yaml)
@@ -61,7 +74,7 @@ module YSI
 
     def github_project_name
       if !@github_project_name
-        origin = Git.new.origin
+        origin = Git.new(Executor.new).origin
         @github_project_name = origin.match("git@github.com:(.*)")[1]
       end
       @github_project_name
@@ -141,11 +154,11 @@ module YSI
           return 0
         else
           failed_assertions.each do |assertion|
-            if dry_run
+            if dry_run?
               out.print "Dry run: "
             end
             out.print "Asserting #{assertion.display_name}: "
-            success = assertion.assert(dry_run: dry_run)
+            success = assertion.assert(executor)
             if !success
               if assertion.error
                 out.puts "error"
@@ -159,7 +172,7 @@ module YSI
           end
 
           out.puts
-          if dry_run
+          if dry_run?
             out.puts "Did a dry run of shipping #{project_name} #{version}." +
               " Nothing was changed."
           else
