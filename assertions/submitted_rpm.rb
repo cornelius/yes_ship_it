@@ -96,34 +96,20 @@ module YSI
       end
 
       engine.out.puts "  Uploading release archive '#{archive_file_name}'"
-      if !engine.dry_run?
-        url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{archive_file_name}"
-        file = File.new(engine.release_archive, "rb")
-        begin
-          RestClient.put(url, file, content_type: "application/x-gzip")
-        rescue RestClient::Exception => e
-          STDERR.puts e.inspect
-        end
-      end
+      url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{archive_file_name}"
+      file = File.new(engine.release_archive, "rb")
+      executor.http_put(url, file, content_type: "application/x-gzip")
 
       spec_file = engine.project_name + ".spec"
       engine.out.puts "  Uploading spec file '#{spec_file}'"
-      if !engine.dry_run?
-        url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{spec_file}"
-        content = create_spec_file("rpm/#{spec_file}.erb")
-        begin
-          RestClient.put(url, content, content_type: "text/plain")
-        rescue RestClient::Exception => e
-          STDERR.puts e.inspect
-        end
-      end
+      url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{spec_file}"
+      content = create_spec_file("rpm/#{spec_file}.erb")
+      executor.http_put(url, content, content_type: "text/plain")
 
       old_files.each do |file|
         engine.out.puts "  Removing '#{file}'"
-        if !engine.dry_run?
-          url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{file}"
-          RestClient.delete(url)
-        end
+        url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}/#{file}"
+        executor.http_delete(url)
       end
 
       engine.out.print "... "
