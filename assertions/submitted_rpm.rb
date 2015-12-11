@@ -46,6 +46,10 @@ module YSI
       erb.result(RpmSpecHelpers.new(engine).get_binding)
     end
 
+    def base_url
+      "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/#{obs_project}/#{engine.project_name}"
+    end
+
     def check
       if !obs_project
         raise AssertionError.new("OBS project is not set")
@@ -59,8 +63,7 @@ module YSI
       @obs_package_files = []
 
       begin
-        url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/#{obs_project}/#{engine.project_name}"
-        xml = RestClient.get(url)
+        xml = RestClient.get(base_url)
       rescue RestClient::Exception => e
         if e.is_a?(RestClient::ResourceNotFound)
           return nil
@@ -93,19 +96,19 @@ module YSI
       end
 
       engine.out.puts "  Uploading release archive '#{archive_file_name}'"
-      url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/#{obs_project}/#{engine.project_name}/#{archive_file_name}"
+      url = "#{base_url}/#{archive_file_name}"
       file = File.new(engine.release_archive, "rb")
       executor.http_put(url, file, content_type: "application/x-gzip")
 
       spec_file = engine.project_name + ".spec"
       engine.out.puts "  Uploading spec file '#{spec_file}'"
-      url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/#{obs_project}/#{engine.project_name}/#{spec_file}"
+      url = "#{base_url}/#{spec_file}"
       content = create_spec_file("rpm/#{spec_file}.erb")
       executor.http_put(url, content, content_type: "text/plain")
 
       old_files.each do |file|
         engine.out.puts "  Removing '#{file}'"
-        url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/#{obs_project}/#{engine.project_name}/#{file}"
+        url = "#{base_url}/#{file}"
         executor.http_delete(url)
       end
 
