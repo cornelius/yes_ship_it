@@ -23,8 +23,7 @@ module YSI
 
     def check
       if current_branch != branch
-        @error = "Not on release branch '#{branch}'"
-        return nil
+        raise AssertionError.new("Not on release branch '#{branch}'")
       else
         return branch
       end

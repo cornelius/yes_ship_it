@@ -124,18 +124,18 @@ module YSI
           skipped_assertions << assertion
           next
         end
-        success = assertion.check
-        if success
-          out.puts success
-        else
-          if assertion.error
-            out.puts "error"
-            out.puts "  " + assertion.error
-            errored_assertions.push(assertion)
+        begin
+          success = assertion.check
+          if success
+            out.puts success
           else
             out.puts "fail"
             failed_assertions.push(assertion)
           end
+        rescue AssertionError => e
+          out.puts "error"
+          out.puts "  " + e.message
+          errored_assertions.push(assertion)
         end
       end
 

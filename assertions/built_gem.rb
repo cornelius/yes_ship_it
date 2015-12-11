@@ -14,8 +14,7 @@ module YSI
 
     def check
       if !File.exist?(gemspec_file)
-        @error = "I need a gemspec: #{gemspec_file}"
-        return nil
+        raise AssertionError.new("I need a gemspec: #{gemspec_file}")
       end
 
       if !File.exist?(gem_file)

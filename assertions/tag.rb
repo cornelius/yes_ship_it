@@ -11,9 +11,9 @@ module YSI
     end
 
     def check
-      `git tag`.each_line do |line|
+      Executor.new.run_command(["git", "tag"]).each_line do |line|
         if line.chomp == tag
-          `git show #{tag}`.each_line do |show_line|
+          Executor.new.run_command(["git", "show", tag]).each_line do |show_line|
             if show_line =~ /Date:\s+(.*)/
               @engine.tag_date = $1
             end

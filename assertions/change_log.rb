@@ -8,14 +8,10 @@ module YSI
 
     def check
       if !File.exist?("CHANGELOG.md")
-        @error = "Expected change log in CHANGELOG.md"
-        return nil
+        raise AssertionError.new("Expected change log in CHANGELOG.md")
       end
 
-      @error = check_content(File.read("CHANGELOG.md"))
-      if @error
-        return nil
-      end
+      check_content(File.read("CHANGELOG.md"))
 
       "CHANGELOG.md"
     end
@@ -24,10 +20,8 @@ module YSI
     end
 
     def check_content(content)
-      if content =~ /#{engine.version}/
-        nil
-      else
-        return "Can't find version #{engine.version} in change log"
+      if content !~ /#{engine.version}/
+        raise AssertionError.new("Can't find version #{engine.version} in change log")
       end
     end
   end

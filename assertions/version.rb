@@ -8,8 +8,7 @@ module YSI
 
     def check
       if !File.exist?(version_file)
-        @error = "Expected version in #{version_file}"
-        return nil
+        raise AssertionError.new("Expected version in #{version_file}")
       end
 
       version = parse_version(version_file)
@@ -17,8 +16,7 @@ module YSI
         @engine.version = version
         return @engine.version
       end
-      @error = "Couldn't find version in #{version_file}"
-      nil
+      raise AssertionError.new("Couldn't find version in #{version_file}")
     end
 
     def assert(_executor)

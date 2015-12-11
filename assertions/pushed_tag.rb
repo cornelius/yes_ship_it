@@ -11,7 +11,7 @@ module YSI
     end
 
     def check
-      response = `git ls-remote --tags origin #{tag}`
+      response = Executor.new.run_command(["git", "ls-remote", "--tags", "origin", tag])
       if response.include?(tag)
         return response
       end

@@ -48,12 +48,10 @@ module YSI
 
     def check
       if !obs_project
-        @error = "OBS project is not set"
-        return nil
+        raise AssertionError.new("OBS project is not set")
       end
       if !engine.release_archive
-        @error = "Release archive is not set. Assert release_archive before submitted_rpm"
-        return nil
+        raise AssertionError.new("Release archive is not set. Assert release_archive before submitted_rpm")
       end
 
       read_obs_credentials(File.expand_path("~/.oscrc"))
@@ -67,11 +65,9 @@ module YSI
         if e.is_a?(RestClient::ResourceNotFound)
           return nil
         elsif e.is_a?(RestClient::Unauthorized)
-          @error = "No credentials set for OBS. Use osc to do this."
-          return nil
+          raise AssertionError.new("No credentials set for OBS. Use osc to do this.")
         else
-          @error = e.to_s
-          return nil
+          raise AssertionError.new(e.to_s)
         end
       end
 

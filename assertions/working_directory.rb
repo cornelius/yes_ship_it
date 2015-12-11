@@ -30,8 +30,7 @@ module YSI
       if status == "clean"
         return status
       else
-        @error = status
-        return nil
+        raise AssertionError.new(status)
       end
     end
 

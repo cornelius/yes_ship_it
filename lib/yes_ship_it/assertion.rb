@@ -1,6 +1,5 @@
 module YSI
   class Assertion
-    attr_reader :error
     attr_accessor :engine
 
     def self.class_for_name(name)

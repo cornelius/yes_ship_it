@@ -14,8 +14,4 @@ shared_examples "an assertion" do
   it "asserts" do
     expect(assertion).to respond_to(:assert)
   end
-
-  it "reports errors" do
-    expect(assertion).to respond_to(:error)
-  end
 end

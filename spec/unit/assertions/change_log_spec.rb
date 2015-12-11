@@ -6,7 +6,9 @@ describe YSI::ChangeLog do
       engine = YSI::Engine.new
       engine.version = "1.2.3"
       a = YSI::ChangeLog.new(engine)
-      expect(a.check_content("")).to eq("Can't find version 1.2.3 in change log")
+      expect {
+        a.check_content("")
+      }.to raise_error("Can't find version 1.2.3 in change log")
     end
 
     it "when no version" do
@@ -20,7 +22,9 @@ describe YSI::ChangeLog do
 
 * Some changes
 EOT
-      expect(a.check_content(content)).to eq("Can't find version 1.2.3 in change log")
+      expect {
+        a.check_content(content)
+      }.to raise_error("Can't find version 1.2.3 in change log")
     end
 
     it "when all info is there" do
