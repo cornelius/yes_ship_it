@@ -117,8 +117,6 @@ EOT
     it "tells how to login" do
       @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
 
-      expect(@client.exit_code).to eq(1)
-
       expected_output = <<EOT
 Shipping...
 
@@ -134,8 +132,9 @@ Asserting published gem: error
 
 Ran into an error. Stopping shipping.
 EOT
+      expect(@client.err).to eq("")
       expect(@client.out).to eq(expected_output)
-      expect(@client.err.empty?).to be(true)
+      expect(@client.exit_code).to eq(1)
     end
   end
 end

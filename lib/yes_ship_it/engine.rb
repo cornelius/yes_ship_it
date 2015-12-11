@@ -158,12 +158,11 @@ module YSI
               out.print "Dry run: "
             end
             out.print "Asserting #{assertion.display_name}: "
-            success = assertion.assert(executor)
-            if !success
-              if assertion.error
-                out.puts "error"
-                out.puts "  " + assertion.error
-              end
+            begin
+              success = assertion.assert(executor)
+            rescue AssertionError => e
+              out.puts "error"
+              out.puts "  " + e.message
               out.puts
               out.puts "Ran into an error. Stopping shipping."
               return 1

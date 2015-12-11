@@ -27,7 +27,7 @@ module YSI
 
     def assert(executor)
       if !File.exist?(File.expand_path("~/.gem/credentials"))
-        raise AssertError.new("You need to log in to Rubygems first by running `gem push #{gem_file}` manually")
+        raise AssertionError.new("You need to log in to Rubygems first by running `gem push #{gem_file}` manually")
       end
 
       executor.run_command(["gem", "push", gem_file])
