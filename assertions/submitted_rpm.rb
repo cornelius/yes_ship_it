@@ -58,6 +58,8 @@ module YSI
 
       read_obs_credentials(File.expand_path("~/.oscrc"))
 
+      @obs_package_files = []
+
       begin
         url = "https://#{obs_user}:#{obs_password}@api.opensuse.org/source/home:cschum:go/#{engine.project_name}"
         xml = RestClient.get(url)
@@ -73,7 +75,6 @@ module YSI
         end
       end
 
-      @obs_package_files = []
       doc = REXML::Document.new(xml)
       doc.elements.each("directory/entry") do |element|
         file_name = element.attributes["name"]
