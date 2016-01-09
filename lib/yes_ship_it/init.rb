@@ -8,9 +8,18 @@ class Init
   end
 
   def setup_config
+    config_file = File.join(@path, "yes_ship_it.conf")
+
+    if File.exist?(config_file)
+      out.puts "There already is a file `yes_ship_it.conf`."
+      out.puts
+      out.puts "This project does not seem to need initialization."
+      return
+    end
+
     out.puts "Initialized directory for shipping."
     out.puts
-    File.open(File.join(@path, "yes_ship_it.conf"), "w") do |f|
+    File.open(config_file, "w") do |f|
       f.puts "# Experimental release automation. See https://github.com/cornelius/yes_ship_it."
       if File.exist?(File.join(@path, "lib", "version.rb"))
         out.puts "It looks like this is is Ruby project."

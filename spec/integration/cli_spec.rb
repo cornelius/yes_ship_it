@@ -250,6 +250,21 @@ EOT
   end
 
   describe "init" do
+    it "fails if there already is a config" do
+      dir = given_directory do
+        given_dummy_file("yes_ship_it.conf")
+      end
+
+      expected_output = <<EOT
+There already is a file `yes_ship_it.conf`.
+
+This project does not seem to need initialization.
+EOT
+
+      expect(run_command(args: ["init"], working_directory: dir)).
+        to exit_with_success(expected_output)
+    end
+
     it "initializes directory with generic template" do
       dir = given_directory
 
@@ -270,7 +285,7 @@ EOT
     it "initializes directory with specific template" do
       dir = nil
       given_directory("init") do
-        path = given_directory_from_data("ruby", from: "init/ruby" )
+        dir = given_directory_from_data("ruby", from: "init/ruby" )
       end
 
       expected_output = <<EOT
