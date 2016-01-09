@@ -1,12 +1,43 @@
+require_relative "spec_helper"
+
 describe Init do
   use_given_filesystem
 
-  it "detects ruby" do
-    path = given_directory("init/ruby")
+  it "falls back to generic project if it can not detect type" do
+    path = given_directory
 
     init = Init.new(path)
+    out = double
+    allow(out).to receive(:puts)
+    init.out = out
+    init.setup_config
 
-    expect(init.setup_config).to be(true)
+    expected_config = <<-EOT
+# Experimental release automation. See https://github.com/cornelius/yes_ship_it.
+assertions:
+  - release_branch
+  - working_directory
+  - version
+  - change_log
+  - tag
+  - pushed_tag
+  - pushed_code
+  - yes_it_shipped
+EOT
+    expect(File.read(File.join(path, "yes_ship_it.conf"))).to eq(expected_config)
+  end
+
+  it "detects ruby" do
+    path = nil
+    given_directory("init") do
+      path = given_directory_from_data("ruby", from: "init/ruby" )
+    end
+
+    init = Init.new(path)
+    out = double
+    allow(out).to receive(:puts)
+    init.out = out
+    init.setup_config
 
     expected_config = <<-EOT
 # Experimental release automation. See https://github.com/cornelius/yes_ship_it.

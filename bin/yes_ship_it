@@ -38,11 +38,6 @@ if ARGV == ["changelog"]
   exit 0
 elsif ARGV == ["init"]
   Init.new(Dir.pwd).setup_config
-  puts "Initialized directory for shipping."
-  puts
-  puts "Check the file `yes_ship_it.conf` and adapt it to your needs."
-  puts
-  puts "Happy shipping!"
 elsif ARGV.empty?
   if !File.exist?(config_file)
     STDERR.puts("Unable to find file `yes_ship_it.conf`. I need it.")

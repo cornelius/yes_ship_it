@@ -256,6 +256,8 @@ EOT
       expected_output = <<EOT
 Initialized directory for shipping.
 
+Couldn't determine type of project, wrote a generic template.
+
 Check the file `yes_ship_it.conf` and adapt it to your needs.
 
 Happy shipping!
@@ -263,10 +265,26 @@ EOT
 
       expect(run_command(args: ["init"], working_directory: dir)).
         to exit_with_success(expected_output)
+    end
 
-      expect(File.read(File.join(dir, "yes_ship_it.conf"))).to eq(
-       "# Experimental release automation. See https://github.com/cornelius/yes_ship_it.\ninclude:\n  ruby_gem\n"
-      )
+    it "initializes directory with specific template" do
+      dir = nil
+      given_directory("init") do
+        path = given_directory_from_data("ruby", from: "init/ruby" )
+      end
+
+      expected_output = <<EOT
+Initialized directory for shipping.
+
+It looks like this is is Ruby project.
+
+Check the file `yes_ship_it.conf` and adapt it to your needs.
+
+Happy shipping!
+EOT
+
+      expect(run_command(args: ["init"], working_directory: dir)).
+        to exit_with_success(expected_output)
     end
   end
 end
