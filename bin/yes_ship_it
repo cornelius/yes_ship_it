@@ -37,11 +37,7 @@ if ARGV == ["changelog"]
   system("git log #{tag}..HEAD")
   exit 0
 elsif ARGV == ["init"]
-  File.open("yes_ship_it.conf", "w") do |file|
-    file.puts "# Experimental release automation. See https://github.com/cornelius/yes_ship_it."
-    file.puts "include:"
-    file.puts "  ruby_gem"
-  end
+  Init.new(Dir.pwd).setup_config
   puts "Initialized directory for shipping."
   puts
   puts "Check the file `yes_ship_it.conf` and adapt it to your needs."
