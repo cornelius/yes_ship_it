@@ -40,5 +40,10 @@ EOT
       file = given_file("version/version.go")
       expect(subject.parse_version(file)).to eq("0.0.1")
     end
+
+    it "in C++" do
+      file = given_file("version/polkaversion.h")
+      expect(subject.parse_version(file)).to eq("0.8")
+    end
   end
 end

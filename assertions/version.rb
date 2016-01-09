@@ -35,6 +35,12 @@ module YSI
             return $1
           end
         end
+      elsif file_name =~ /\.h$/
+        File.read(file_name).each_line do |line|
+          if line =~ /#define .*_VERSION "(.*)"/
+            return $1
+          end
+        end
       end
       nil
     end
