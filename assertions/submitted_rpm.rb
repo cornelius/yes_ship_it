@@ -106,9 +106,9 @@ module YSI
       content = create_spec_file("rpm/#{spec_file}.erb")
       executor.http_put(url, content, content_type: "text/plain")
 
-      old_files.each do |file|
-        engine.out.puts "  Removing '#{file}'"
-        url = "#{base_url}/#{file}"
+      old_files.each do |old_file|
+        engine.out.puts "  Removing '#{old_file}'"
+        url = "#{base_url}/#{old_file}"
         executor.http_delete(url)
       end
 
