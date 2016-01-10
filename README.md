@@ -1,5 +1,6 @@
 # Yes, ship it!
 
+[![Gem Version](https://badge.fury.io/rb/yes_ship_it.svg)](https://badge.fury.io/rb/yes_ship_it)
 [![Build Status](https://travis-ci.org/cornelius/yes_ship_it.svg?branch=master)](https://travis-ci.org/cornelius/yes_ship_it)
 
 *The ultimate release script*
