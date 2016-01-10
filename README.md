@@ -1,5 +1,7 @@
 # Yes, ship it!
 
+[![Build Status](https://travis-ci.org/cornelius/yes_ship_it.svg?branch=master)](https://travis-ci.org/cornelius/yes_ship_it)
+
 *The ultimate release script*
 
 Whenever the answer is "Yes, ship it!" you will need `yes_ship_it`, this tool.
