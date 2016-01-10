@@ -1,5 +1,9 @@
 # Change log of yes_ship_it
 
+## Version 0.1.1
+
+* Fix failure in `yes_it_shipped` assertion when parsing tag date
+
 ## Version 0.1.0
 
 yes_ship_it has reached a useful state, so it's going to a version scheme which
