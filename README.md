@@ -80,10 +80,14 @@ Many software projects will have specific needs for their releases. These can
 be broken down and reflected in additional assertions. Adding assertions is
 easy. There is a well-defined API for it.
 
-There is no supported plugin concept. The idea is that all assertions ship with
-`yes_ship_it`. This will maximize the value for the community of people who ship
-software. The project is very open to include new assertions. Just submit a pull
-request. `yes_ship_it` will ship it with the next release.
+You can extend yes_ship_it by writing local assertions as plugins. Use the
+command `yes_ship_it plugin` to generate and manage them.
+
+While plugins can be useful for very special assertions or as a start for new
+ones, it would be great to generalize them and ship them with `yes_ship_it`.
+This will maximize the value for the community of people who ship software.
+The project is very open to include new assertions. Just submit a pull request.
+`yes_ship_it` will ship it with the next release.
 
 ## Testing
 
