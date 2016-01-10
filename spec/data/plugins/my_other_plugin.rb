@@ -8,6 +8,7 @@ module YSI
     end
 
     def assert(executor)
+      "done"
     end
   end
 end

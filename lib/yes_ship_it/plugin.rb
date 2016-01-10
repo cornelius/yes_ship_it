@@ -64,6 +64,7 @@ module YSI
         f.puts "    end"
         f.puts
         f.puts "    def assert(executor)"
+        f.puts "      \"help me to do it\""
         f.puts "    end"
         f.puts "  end"
         f.puts "end"

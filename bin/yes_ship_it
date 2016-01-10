@@ -72,6 +72,8 @@ elsif ARGV.empty?
   engine.data_dir = options[:data_dir] if options[:data_dir]
 
   begin
+    YSI::Plugin.new(Dir.pwd).load
+
     engine.read(config_file)
 
     exit engine.run

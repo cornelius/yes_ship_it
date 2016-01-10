@@ -221,6 +221,33 @@ EOT
       file_list = `tar tzf #{release_archive}`.split("\n").sort
       expect(file_list).to eq(expected_file_list.split("\n").sort)
     end
+
+    it "loads plugins" do
+      dir = nil
+      given_directory do
+        dir = given_directory "red_herring" do
+          given_file("yes_ship_it.conf", from: "yes_ship_it.plugins.conf")
+          given_directory "yes_ship_it" do
+            given_directory_from_data "assertions", from: "plugins"
+          end
+        end
+      end
+
+      expected_output = <<EOT
+Shipping...
+
+Checking My awesome plugin: fail
+Checking My other even more awesome plugin: fail
+
+Dry run: Asserting My awesome plugin: help me to do it
+Dry run: Asserting My other even more awesome plugin: done
+
+Did a dry run of shipping red_herring . Nothing was changed.
+EOT
+      expect(run_command(args: ["--dry-run"],
+        working_directory: File.join(dir))).
+          to exit_with_success(expected_output)
+    end
   end
 
   describe "changelog helper" do

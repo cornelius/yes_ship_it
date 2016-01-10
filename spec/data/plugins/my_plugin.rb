@@ -8,6 +8,7 @@ module YSI
     end
 
     def assert(executor)
+      "help me to do it"
     end
   end
 end
