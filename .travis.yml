@@ -4,4 +4,4 @@ rvm:
  - "2.1.8"
  - "2.2.4"
  - "2.3.0"
-script: bundle exec rspec spec/unit spec/integration
+script: bundle exec rspec spec/unit
