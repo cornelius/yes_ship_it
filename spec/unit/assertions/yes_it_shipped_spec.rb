@@ -62,7 +62,7 @@ EOT
 
       engine = YSI::Engine.new
       allow(engine).to receive(:project_name).and_return("dummy")
-      allow(engine).to receive(:guthub_project_name).and_return("cornelius/yes_ship_it")
+      allow(engine).to receive(:github_project_name).and_return("cornelius/yes_ship_it")
       engine.version = "1.1.1"
       engine.tag_date = Time.parse("20151208T141655+0100")
 
