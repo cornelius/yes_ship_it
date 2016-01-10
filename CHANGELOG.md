@@ -1,5 +1,15 @@
 # Change log of yes_ship_it
 
+## Version 0.1.0
+
+yes_ship_it has reached a useful state, so it's going to a version scheme which
+will distinguish feature and bug fix releases. It's not API stable yet, so it's
+still using 0.x releases.
+
+Changes in this version:
+
+* Add documentation for `plugin` command
+
 ## Version 0.0.6
 
 * Add support for local assertion plugins. `yes_ship_it plugin generate` creates
