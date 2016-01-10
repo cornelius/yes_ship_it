@@ -47,7 +47,7 @@ EOT
           :body => {
             "project"=>"dummy",
             "project_url"=>"https://github.com/cornelius/yes_ship_it",
-            "release_date_time"=>"2015-12-08 14:16:55 +0100",
+            "release_date_time"=>"2015-12-08 13:16:55 UTC",
             "release_url"=>"https://github.com/cornelius/yes_ship_it/releases/tag/v1.1.1",
             "version"=>"1.1.1",
             "ysi_config_url"=>"https://raw.githubusercontent.com/cornelius/yes_ship_it/master/yes_ship_it.conf"
@@ -55,7 +55,7 @@ EOT
           :headers => {
             'Accept'=>'*/*; q=0.5, application/xml',
             'Accept-Encoding'=>'gzip, deflate',
-            'Content-Length'=>'342',
+            'Content-Length'=>'338',
             'Content-Type'=>'application/x-www-form-urlencoded',
             'User-Agent'=>'Ruby'
           }).to_return(:status => 200, :body => "", :headers => {})
