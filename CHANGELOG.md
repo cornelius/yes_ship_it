@@ -1,5 +1,15 @@
 # Change log of yes_ship_it
 
+## Version 0.0.6
+
+* Add support for local assertion plugins. `yes_ship_it plugin generate` creates
+  the scaffold for a new plugin. `yes_ship_it plugin list` shows all available
+  local plugins.
+* Support reading versions from C/C++ header files
+* Don't overwrite existing config with `yes_ship_it init` (bug #5)
+* Implement detection of ruby and generic projects in `yes_ship_it init`
+* Support `obs_project` parameter in `submitted_rpm` assertion
+
 ## Version 0.0.5
 
 * Handle missing credentials for Rubygems, when pushing gems
