@@ -15,7 +15,7 @@ module YSI
       if output
         output.each_line do |show_line|
           if show_line =~ /Date:\s+(.*)/
-            @engine.tag_date = Time.parse($1)
+            @engine.tag_date = Time.strptime($1,"%a %b %d %H:%M:%S %Y %z")
           end
         end
       end
