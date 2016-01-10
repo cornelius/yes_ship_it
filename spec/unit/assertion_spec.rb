@@ -1,6 +1,16 @@
 require_relative "spec_helper"
 
 describe YSI::Assertion do
+  describe ".class_name" do
+    it "converts simple name" do
+      expect(YSI::Assertion.class_name("simple")).to eq ("Simple")
+    end
+
+    it "converts multi-word name" do
+      expect(YSI::Assertion.class_name("multi_word")).to eq ("MultiWord")
+    end
+  end
+
   describe ".class_for_name" do
     it "creates VersionNumber class" do
       expect(YSI::Assertion.class_for_name("version")).
@@ -18,7 +28,7 @@ describe YSI::Assertion do
       parameter :some_thing
       parameter :some_other_thing, "default_hello"
 
-      def display_name
+      def self.display_name
         "My Assertion"
       end
 

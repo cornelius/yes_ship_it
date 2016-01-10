@@ -302,4 +302,96 @@ EOT
         to exit_with_success(expected_output)
     end
   end
+
+  describe "plugin" do
+    it "fails when no sub command is given" do
+      expect(run_command(args: ["plugin"])).to exit_with_error(1, /Invalid command/)
+    end
+
+    it "fails when invalid sub command is given" do
+      result = run_command(args: ["plugin", "xxx"])
+      expect(result).to exit_with_error(1, /Invalid command/)
+      expect(result.stderr).to match /Usage:/
+    end
+
+    describe "list" do
+      it "shows message when there are no plugins" do
+        dir = given_directory
+
+        expected_output = <<EOT
+There are no local plugins.
+
+Create one with `yes_ship_it plugin init MyAssertion`.
+
+Documentation about how to write plugins can be found at
+
+    https://github.com/cornelius/yes_ship_it/wiki/plugins
+EOT
+
+        expect(run_command(args: ["plugin", "list"], working_directory: dir)).
+          to exit_with_success(expected_output)
+      end
+
+      it "lists plugins" do
+        dir = given_directory do
+          given_directory "yes_ship_it" do
+            given_directory_from_data "assertions", from: "plugins"
+          end
+        end
+
+        expected_output = <<EOT
+my_other_plugin: My other even more awesome plugin
+my_plugin: My awesome plugin
+EOT
+
+        expect(run_command(args: ["plugin", "list"], working_directory: dir)).
+          to exit_with_success(expected_output)
+      end
+    end
+
+    describe "generate" do
+      it "fails when arguments are missing" do
+        expected_output = <<EOT
+Parameters are missing. Use for example
+
+    yes_ship_it plugin generate my_plugin "My plugin"
+
+to generate a plugin `my_plugin` with a display name of "My plugin".
+EOT
+        expect(run_command(args: ["plugin", "generate"])).to exit_with_error(1, expected_output)
+      end
+
+      it "fails when plugin already exists" do
+        dir = given_directory do
+          given_directory "yes_ship_it" do
+            given_directory "assertions" do
+              given_dummy_file "my_plugin.rb"
+            end
+          end
+        end
+
+        plugin_path = File.join(dir, "yes_ship_it", "assertions", "my_plugin.rb")
+
+        expected_output = <<EOT
+Can't generate plugin. Plugin already exists at `#{plugin_path}`.
+EOT
+        expect(run_command(args: ["plugin", "generate", "my_plugin", "My Plugin"], working_directory: dir)).
+          to exit_with_error(1, expected_output)
+      end
+
+      it "creates new plugin" do
+        dir = given_directory
+        plugin_path = File.join(dir, "yes_ship_it", "assertions", "my_plugin.rb")
+
+        expected_output = <<EOT
+Generated assertion plugin at `#{plugin_path}`.
+EOT
+        expect(run_command(args: ["plugin", "generate", "my_plugin", "My awesome plugin"], working_directory: dir)).
+          to exit_with_success(expected_output)
+
+        expected_code = File.read(given_file("plugins/my_plugin.rb"))
+        expect(File.read(plugin_path)).to eq(expected_code)
+      end
+    end
+  end
 end

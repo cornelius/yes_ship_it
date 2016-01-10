@@ -1,6 +1,6 @@
 module YSI
   class BuiltGem < Assertion
-    def display_name
+    def self.display_name
       "built gem"
     end
 

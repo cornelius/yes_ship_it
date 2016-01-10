@@ -2,7 +2,7 @@ module YSI
   class PushedCode < Assertion
     needs "release_branch"
 
-    def display_name
+    def self.display_name
       "pushed code"
     end
 

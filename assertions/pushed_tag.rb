@@ -2,7 +2,7 @@ module YSI
   class PushedTag < Assertion
     needs "tag"
 
-    def display_name
+    def self.display_name
       "pushed tag"
     end
 

@@ -2,7 +2,7 @@ module YSI
   class YesItShipped < Assertion
     needs "tag"
 
-    def display_name
+    def self.display_name
       "pushed to yes-it-shipped"
     end
 

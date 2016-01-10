@@ -1,6 +1,6 @@
 module YSI
   class WorkingDirectory < Assertion
-    def display_name
+    def self.display_name
       "working directory"
     end
 

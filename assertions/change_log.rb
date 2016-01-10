@@ -2,7 +2,7 @@ module YSI
   class ChangeLog < Assertion
     needs "version"
 
-    def display_name
+    def self.display_name
       "change log"
     end
 

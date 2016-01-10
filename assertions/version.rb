@@ -2,7 +2,7 @@ module YSI
   class Version < Assertion
     parameter :version_file, "lib/version.rb"
 
-    def display_name
+    def self.display_name
       "version number"
     end
 

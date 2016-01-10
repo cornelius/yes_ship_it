@@ -2,7 +2,7 @@ module YSI
   class PublishedGem < Assertion
     needs "built_gem"
 
-    def display_name
+    def self.display_name
       "published gem"
     end
 

@@ -1,6 +1,6 @@
 module YSI
   class ReleaseArchive < Assertion
-    def display_name
+    def self.display_name
       "release archive"
     end
 

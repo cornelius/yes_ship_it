@@ -2,10 +2,13 @@ module YSI
   class Assertion
     attr_accessor :engine
 
+    def self.class_name(name)
+      name.split("_").map { |n| n.capitalize }.join
+    end
+
     def self.class_for_name(name)
-      class_name = name.split("_").map { |n| n.capitalize }.join
       begin
-        Object.const_get("YSI::" + class_name)
+        Object.const_get("YSI::" + class_name(name))
       rescue NameError
         raise YSI::Error.new("Error: Unknown assertion '#{name}'")
       end
@@ -50,6 +53,10 @@ module YSI
       @engine = engine
       @parameters = {}
       @parameter_defaults = {}
+    end
+
+    def display_name
+      self.class.display_name
     end
 
     def needs

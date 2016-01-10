@@ -2,7 +2,7 @@ module YSI
   class Tag < Assertion
     needs "version"
 
-    def display_name
+    def self.display_name
       "tag"
     end
 

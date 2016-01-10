@@ -37,10 +37,30 @@ if ARGV == ["changelog"]
   system("git log #{tag}..HEAD")
   exit 0
 elsif ARGV == ["init"]
-  Init.new(Dir.pwd).setup_config
+  YSI::Init.new(Dir.pwd).setup_config
+elsif ARGV[0] == "plugin"
+  plugin = YSI::Plugin.new(Dir.pwd)
+  if ARGV[1] == "list"
+    plugin.list
+  elsif ARGV[1] == "generate"
+    if !ARGV[2].is_a?(String) && !ARGV[3].is_a?(String)
+      STDERR.puts "Parameters are missing. Use for example"
+      STDERR.puts
+      STDERR.puts "    yes_ship_it plugin generate my_plugin \"My plugin\""
+      STDERR.puts
+      STDERR.puts "to generate a plugin `my_plugin` with a display name of \"My plugin\"."
+      exit 1
+    end
+    plugin.generate(ARGV[2], ARGV[3])
+  else
+    STDERR.puts "Invalid command"
+    STDERR.puts
+    STDERR.puts option_parser
+    exit 1
+  end
 elsif ARGV.empty?
   if !File.exist?(config_file)
-    STDERR.puts("Unable to find file `yes_ship_it.conf`. I need it.")
+    STDERR.puts "Unable to find file `yes_ship_it.conf`. I need it."
     exit 1
   end
 

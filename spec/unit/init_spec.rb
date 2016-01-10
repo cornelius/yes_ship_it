@@ -1,12 +1,12 @@
 require_relative "spec_helper"
 
-describe Init do
+describe YSI::Init do
   use_given_filesystem
 
   it "falls back to generic project if it can not detect type" do
     path = given_directory
 
-    init = Init.new(path)
+    init = YSI::Init.new(path)
     out = double
     allow(out).to receive(:puts)
     init.out = out
@@ -33,7 +33,7 @@ EOT
       path = given_directory_from_data("ruby", from: "init/ruby" )
     end
 
-    init = Init.new(path)
+    init = YSI::Init.new(path)
     out = double
     allow(out).to receive(:puts)
     init.out = out

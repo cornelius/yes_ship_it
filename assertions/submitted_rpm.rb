@@ -5,7 +5,7 @@ module YSI
     attr_reader :obs_user, :obs_password
     attr_reader :obs_package_files
 
-    def display_name
+    def self.display_name
       "submitted RPM"
     end
 

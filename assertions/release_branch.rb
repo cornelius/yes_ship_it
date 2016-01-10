@@ -1,6 +1,6 @@
 module YSI
   class ReleaseBranch < Assertion
-    def display_name
+    def self.display_name
       "release branch"
     end
 
