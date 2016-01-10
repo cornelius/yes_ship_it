@@ -8,7 +8,7 @@ module YSI
 
     def check
       begin
-        json = RestClient.get("https://yes-it-shipped.herokuapp.com/releases/#{engine.project_name}/#{engine.version}")
+        RestClient.get("https://yes-it-shipped.herokuapp.com/releases/#{engine.project_name}/#{engine.version}")
         return "#{engine.project_name}-#{engine.version}"
       rescue RestClient::ResourceNotFound
         return nil
