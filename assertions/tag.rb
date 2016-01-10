@@ -10,14 +10,21 @@ module YSI
       @engine.tag
     end
 
+    def get_tag_date(executor)
+      output = executor.run_command(["git", "show", tag])
+      if output
+        output.each_line do |show_line|
+          if show_line =~ /Date:\s+(.*)/
+            @engine.tag_date = Time.parse($1)
+          end
+        end
+      end
+    end
+
     def check
       Executor.new.run_command(["git", "tag"]).each_line do |line|
         if line.chomp == tag
-          Executor.new.run_command(["git", "show", tag]).each_line do |show_line|
-            if show_line =~ /Date:\s+(.*)/
-              @engine.tag_date = $1
-            end
-          end
+          get_tag_date(YSI::Executor.new)
           return tag
         end
       end
@@ -26,6 +33,7 @@ module YSI
 
     def assert(executor)
       executor.run_command(["git", "tag", "-a", tag, "-m", engine.version])
+      get_tag_date(executor)
       tag
     end
   end

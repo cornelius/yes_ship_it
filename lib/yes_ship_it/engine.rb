@@ -2,7 +2,8 @@ module YSI
   class Engine
     attr_reader :assertions
     attr_reader :executor
-    attr_accessor :version, :tag_date, :release_archive
+    attr_writer :tag_date
+    attr_accessor :version, :release_archive
     attr_accessor :out
     attr_accessor :data_dir
 
@@ -94,6 +95,10 @@ module YSI
 
     def tag
       "v#{version}"
+    end
+
+    def tag_date
+      @tag_date && @tag_date.utc
     end
 
     def release_archive_file_name

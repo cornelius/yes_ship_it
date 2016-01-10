@@ -5,6 +5,7 @@ require "inifile"
 require "rexml/document"
 require "erb"
 require "cheetah"
+require "time"
 
 require_relative "yes_ship_it/assertion.rb"
 require_relative "yes_ship_it/engine.rb"

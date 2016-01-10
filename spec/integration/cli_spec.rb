@@ -67,7 +67,7 @@ Checking version number: 0.0.1
 Checking change log: CHANGELOG.md
 Checking tag: v0.0.1
 
-red_herring 0.0.1 already shipped on Wed Jul 1 00:46:19 2015 +0200
+red_herring 0.0.1 already shipped on 2015-06-30 22:46:19 UTC
 EOT
 
       expect(run_command(working_directory: File.join(dir, "red_herring"))).
