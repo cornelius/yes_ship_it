@@ -1,5 +1,10 @@
 # Change log of yes_ship_it
 
+## Version 0.1.2
+
+* Parse time zone of tag date also in the case when it's different from local
+  time zone
+
 ## Version 0.1.1
 
 * Fix failure in `yes_it_shipped` assertion when parsing tag date
