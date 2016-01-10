@@ -8,8 +8,10 @@ option_parser = OptionParser.new do |opts|
 
   opts.separator ""
   opts.separator "Commands:"
-  opts.separator "  changelog - show change log since last release"
-  opts.separator "  init      - initialize directory for shipping with yes_ship_it"
+  opts.separator "  changelog       - show change log since last release"
+  opts.separator "  init            - initialize directory for shipping with yes_ship_it"
+  opts.separator "  plugin list     - list all local assertion plugins"
+  opts.separator "  plugin generate - generate a template for a local plugin"
   opts.separator ""
   opts.separator "Specific options:"
 
