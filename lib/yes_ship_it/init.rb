@@ -42,6 +42,11 @@ module YSI
         end
       end
       out.puts
+      out.puts "The generated configuration includes an assertion, which publishes the release on"
+      out.puts "https://yes-it-shipped.herokuapp.com, our release notification service. If you"
+      out.puts "prefer to not publish releases there, simply remove the `yes_it_shipped`"
+      out.puts "assertion."
+      out.puts
       out.puts "Check the file `yes_ship_it.conf` and adapt it to your needs."
       out.puts
       out.puts "Happy shipping!"

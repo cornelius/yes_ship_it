@@ -300,6 +300,11 @@ Initialized directory for shipping.
 
 Couldn't determine type of project, wrote a generic template.
 
+The generated configuration includes an assertion, which publishes the release on
+https://yes-it-shipped.herokuapp.com, our release notification service. If you
+prefer to not publish releases there, simply remove the `yes_it_shipped`
+assertion.
+
 Check the file `yes_ship_it.conf` and adapt it to your needs.
 
 Happy shipping!
@@ -319,6 +324,11 @@ EOT
 Initialized directory for shipping.
 
 It looks like this is is Ruby project.
+
+The generated configuration includes an assertion, which publishes the release on
+https://yes-it-shipped.herokuapp.com, our release notification service. If you
+prefer to not publish releases there, simply remove the `yes_it_shipped`
+assertion.
 
 Check the file `yes_ship_it.conf` and adapt it to your needs.
 
