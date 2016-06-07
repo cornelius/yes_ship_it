@@ -10,9 +10,11 @@ module YSI
       "https://yes-it-shipped.herokuapp.com"
     end
 
+    parameter :yis_server_url, YesItShipped.url
+    
     def check
       begin
-        RestClient.get("#{YesItShipped.url}/releases/#{engine.project_name}/#{engine.version}")
+        RestClient.get("#{yis_server_url}/releases/#{engine.project_name}/#{engine.version}")
         return "#{engine.project_name}-#{engine.version}"
       rescue RestClient::ResourceNotFound
         return nil
@@ -20,7 +22,7 @@ module YSI
     end
 
     def assert(executor)
-      executor.http_post("#{YesItShipped.url}/releases",
+      executor.http_post("#{yis_server_url}/releases",
         project: engine.project_name, version: engine.version,
         release_date_time: engine.tag_date, project_url: engine.project_url,
         release_url: engine.release_url, ysi_config_url: engine.config_url)

@@ -71,4 +71,27 @@ EOT
       expect(assertion.assert(engine.executor)).to eq("dummy-1.1.1")
     end
   end
+
+  it "reads yis_server_url parameter" do
+    config = <<EOT
+assertions:
+  yes_it_shipped:
+    yis_server_url: http://localhost:3000
+EOT
+    engine = YSI::Engine.new
+    engine.read_config(config)
+
+    expect(engine.assertions.first.yis_server_url).to eq("http://localhost:3000")
+  end
+
+  it "has default yis_server_url parameter" do
+    config = <<EOT
+assertions:
+  yes_it_shipped:
+EOT
+    engine = YSI::Engine.new
+    engine.read_config(config)
+
+    expect(engine.assertions.first.yis_server_url).to eq("https://yes-it-shipped.herokuapp.com")
+  end
 end
