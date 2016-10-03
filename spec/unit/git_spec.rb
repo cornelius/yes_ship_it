@@ -43,13 +43,5 @@ EOT
 
       expect(git.needs_push?).to be(false)
     end
-
-    it "returns false if local changes are in master branch but we are on another branch" do
-      dir = given_directory
-      setup_test_git_repo("009", dir)
-      git = YSI::Git.new(YSI::Executor.new, File.join(dir, "red_herring"))
-
-      expect(git.needs_push?).to be(false)
-    end
   end
 end
