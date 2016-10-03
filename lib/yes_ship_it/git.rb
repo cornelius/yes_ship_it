@@ -16,13 +16,11 @@ module YSI
     end
 
     def needs_push?
-      branch = run_git(["branch"]).split("\n").find { |x| x.strip.start_with?("*")}
-      branch = branch.strip[1..-1].strip
-      local_branch = run_git(["rev-parse", branch])
-      remote_branch = run_git(["rev-parse", "origin/#{branch}"])
-      base = run_git(["merge-base", branch, "origin/#{branch}"])
+      local_master = run_git(["rev-parse", "master"])
+      remote_master = run_git(["rev-parse", "origin/master"])
+      base = run_git(["merge-base", "master", "origin/master"])
 
-      remote_branch == base && local_branch != remote_branch
+      remote_master == base && local_master != remote_master
     end
 
     def push
