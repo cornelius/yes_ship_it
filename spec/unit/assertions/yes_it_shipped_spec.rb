@@ -17,8 +17,8 @@ describe YSI::YesItShipped do
 }
 EOT
       stub_request(:get, "https://yes-it-shipped.herokuapp.com/releases/dummy/1.0.0").
-        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-        to_return(:status => 200, :body => body, :headers => {})
+         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Host'=>'yes-it-shipped.herokuapp.com'}).
+         to_return(:status => 200, :body => body, :headers => {})
 
       engine = YSI::Engine.new
       allow(engine).to receive(:project_name).and_return("dummy")
@@ -29,8 +29,8 @@ EOT
 
     it "fails when release is not there" do
       stub_request(:get, "https://yes-it-shipped.herokuapp.com/releases/dummy/2.0.0").
-        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-        to_return(:status => 404, :body => "", :headers => {})
+         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Host'=>'yes-it-shipped.herokuapp.com'}).
+         to_return(:status => 404, :body => "", :headers => {})
 
       engine = YSI::Engine.new
       allow(engine).to receive(:project_name).and_return("dummy")
@@ -53,11 +53,11 @@ EOT
             "ysi_config_url"=>"https://raw.githubusercontent.com/cornelius/yes_ship_it/master/yes_ship_it.conf"
           },
           :headers => {
-            'Accept'=>'*/*; q=0.5, application/xml',
+            'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip, deflate',
-            'Content-Length'=>'338',
+            'Content-Length'=>'334',
             'Content-Type'=>'application/x-www-form-urlencoded',
-            'User-Agent'=>'Ruby'
+            'Host'=>'yes-it-shipped.herokuapp.com'
           }).to_return(:status => 200, :body => "", :headers => {})
 
       engine = YSI::Engine.new
