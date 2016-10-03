@@ -1,11 +1,12 @@
 module YSI
   class ReleaseBranch < Assertion
+    parameter :branch_name, "master"
     def self.display_name
       "release branch"
     end
 
     def branch
-      "master"
+      branch_name
     end
 
     def current_branch
