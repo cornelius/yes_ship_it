@@ -1,5 +1,9 @@
 # Change log of yes_ship_it
 
+## Version 0.2.0
+
+* Make URL of YesItShipped server where updates are posted configurable
+
 ## Version 0.1.2
 
 * Parse time zone of tag date also in the case when it's different from local
