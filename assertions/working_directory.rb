@@ -13,6 +13,8 @@ module YSI
         g = git_status
         if g =~ /working directory clean/
           @status = "clean"
+        elsif g =~ /working tree clean/
+          @status = "clean"
         elsif g =~ /Changes to be committed/
           @status = "uncommitted changes"
         elsif g =~ /Untracked files/

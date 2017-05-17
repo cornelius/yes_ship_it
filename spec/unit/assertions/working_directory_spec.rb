@@ -2,6 +2,21 @@ require_relative "../spec_helper.rb"
 
 describe YSI::WorkingDirectory do
   describe "#status" do
+    context "git 2.12.0" do
+      it "clean" do
+        a = YSI::WorkingDirectory.new(YSI::Engine)
+
+        git_output = <<EOT
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+EOT
+        allow(a).to receive(:git_status).and_return(git_output)
+
+        expect(a.status).to eq("clean")
+      end
+    end
+
     it "clean" do
       a = YSI::WorkingDirectory.new(YSI::Engine)
 
