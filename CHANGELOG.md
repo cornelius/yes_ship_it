@@ -1,5 +1,9 @@
 # Change log of yes_ship_it
 
+## Version 0.2.1
+
+* Make working tree check work with git 2.12
+
 ## Version 0.2.0
 
 * Make URL of YesItShipped server where updates are posted configurable
