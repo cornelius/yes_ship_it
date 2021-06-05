@@ -9,3 +9,7 @@ def setup_test_git_repo(version, dir)
     raise "Unable to extract tarball #{tarball}"
   end
 end
+
+def path_prefix
+  /darwin/ =~ RUBY_PLATFORM ? '/private' : nil
+end

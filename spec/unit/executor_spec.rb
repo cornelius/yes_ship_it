@@ -6,7 +6,7 @@ describe YSI::Executor do
   describe "working directory" do
     it "runs in the given working directory" do
       working_directory = subject.run_command(["pwd"], working_directory: "/tmp")
-      expect(working_directory).to eq("/tmp\n")
+      expect(working_directory).to eq(File.join(path_prefix, "/tmp\n")) 
     end
 
     it "sets back the working directory to the original value" do

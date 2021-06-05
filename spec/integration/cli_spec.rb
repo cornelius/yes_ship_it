@@ -407,7 +407,7 @@ EOT
           end
         end
 
-        plugin_path = File.join(dir, "yes_ship_it", "assertions", "my_plugin.rb")
+        plugin_path = File.join(path_prefix, dir, "yes_ship_it", "assertions", "my_plugin.rb")
 
         expected_output = <<EOT
 Can't generate plugin. Plugin already exists at `#{plugin_path}`.
@@ -418,7 +418,7 @@ EOT
 
       it "creates new plugin" do
         dir = given_directory
-        plugin_path = File.join(dir, "yes_ship_it", "assertions", "my_plugin.rb")
+        plugin_path = File.join(path_prefix, dir, "yes_ship_it", "assertions", "my_plugin.rb")
 
         expected_output = <<EOT
 Generated assertion plugin at `#{plugin_path}`.
