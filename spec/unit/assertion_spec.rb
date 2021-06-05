@@ -24,34 +24,36 @@ describe YSI::Assertion do
   end
 
   describe "parameters" do
-    class MyAssertion < YSI::Assertion
-      parameter :some_thing
-      parameter :some_other_thing, "default_hello"
+    module YSI
+      class MyAssertion < Assertion
+        parameter :some_thing
+        parameter :some_other_thing, "default_hello"
 
-      def self.display_name
-        "My Assertion"
-      end
+        def self.display_name
+          "My Assertion"
+        end
 
-      def check
-      end
+        def check
+        end
 
-      def assert
+        def assert
+        end
       end
     end
 
     it "has methods for parameter" do
-      my = MyAssertion.new(YSI::Engine.new)
+      my = YSI::MyAssertion.new(YSI::Engine.new)
       my.some_thing = "hello"
       expect(my.some_thing).to eq("hello")
     end
 
     it "has default value for parameter" do
-      my = MyAssertion.new(YSI::Engine.new)
+      my = YSI::MyAssertion.new(YSI::Engine.new)
       expect(my.some_other_thing).to eq("default_hello")
     end
 
     it "returns nil when parameter is not set" do
-      my = MyAssertion.new(YSI::Engine.new)
+      my = YSI::MyAssertion.new(YSI::Engine.new)
       expect(my.some_thing).to be(nil)
     end
 
