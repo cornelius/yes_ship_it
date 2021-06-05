@@ -17,7 +17,7 @@ describe YSI::YesItShipped do
 }
 EOT
       stub_request(:get, "https://yes-it-shipped.herokuapp.com/releases/dummy/1.0.0").
-         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Host'=>'yes-it-shipped.herokuapp.com'}).
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>/.*/, 'Host'=>'yes-it-shipped.herokuapp.com', 'User-Agent'=>/.*/}).
          to_return(:status => 200, :body => body, :headers => {})
 
       engine = YSI::Engine.new
@@ -29,7 +29,7 @@ EOT
 
     it "fails when release is not there" do
       stub_request(:get, "https://yes-it-shipped.herokuapp.com/releases/dummy/2.0.0").
-         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Host'=>'yes-it-shipped.herokuapp.com'}).
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>/.*/, 'Host'=>'yes-it-shipped.herokuapp.com', 'User-Agent'=>/.*/}).
          to_return(:status => 404, :body => "", :headers => {})
 
       engine = YSI::Engine.new
@@ -54,10 +54,11 @@ EOT
           },
           :headers => {
             'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip, deflate',
+            'Accept-Encoding'=> /.*/,
             'Content-Length'=>'334',
             'Content-Type'=>'application/x-www-form-urlencoded',
-            'Host'=>'yes-it-shipped.herokuapp.com'
+            'Host'=>'yes-it-shipped.herokuapp.com',
+            'User-Agent' => /.*/
           }).to_return(:status => 200, :body => "", :headers => {})
 
       engine = YSI::Engine.new
