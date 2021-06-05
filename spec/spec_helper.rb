@@ -11,5 +11,5 @@ def setup_test_git_repo(version, dir)
 end
 
 def path_prefix
-  /darwin/ =~ RUBY_PLATFORM ? '/private' : nil
+  /darwin/ =~ RUBY_PLATFORM ? '/private' : ''
 end
