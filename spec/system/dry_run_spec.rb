@@ -29,7 +29,7 @@ describe "dry run" do
     checkout_tar = File.expand_path("../data/red_herring-checkout-dry-run.tar.gz", __FILE__)
     @client.inject_tarball(checkout_tar)
 
-    @client.execute(["yes_ship_it.ruby2.1", "--dry-run"], working_directory: "red_herring")
+    @client.execute(["yes_ship_it.ruby2.5", "--dry-run"], working_directory: "red_herring")
 
     expected_output = <<EOT
 Shipping...

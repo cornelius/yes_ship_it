@@ -30,7 +30,7 @@ describe "ship ruby gem" do
       checkout_tar = File.expand_path("../data/red_herring-checkout-build.tar.gz", __FILE__)
       @client.inject_tarball(checkout_tar)
 
-      @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
+      @client.execute(["yes_ship_it.ruby2.5"], working_directory: "red_herring")
 
       expect(@client.exit_code).to eq(0)
 
@@ -55,7 +55,7 @@ EOT
       checkout_tar = File.expand_path("../data/red_herring-checkout-push.tar.gz", __FILE__)
       @client.inject_tarball(checkout_tar)
 
-      @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
+      @client.execute(["yes_ship_it.ruby2.5"], working_directory: "red_herring")
 
       expect(@client.exit_code).to eq(0)
 
@@ -83,7 +83,7 @@ EOT
       checkout_tar = File.expand_path("../data/red_herring-checkout-not-push.tar.gz", __FILE__)
       @client.inject_tarball(checkout_tar)
 
-      @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
+      @client.execute(["yes_ship_it.ruby2.5"], working_directory: "red_herring")
 
       expect(@client.exit_code).to eq(0)
 
@@ -115,7 +115,7 @@ EOT
     end
 
     it "tells how to login" do
-      @client.execute(["yes_ship_it.ruby2.1"], working_directory: "red_herring")
+      @client.execute(["yes_ship_it.ruby2.5"], working_directory: "red_herring")
 
       expected_output = <<EOT
 Shipping...
