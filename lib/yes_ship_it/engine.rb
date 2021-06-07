@@ -90,7 +90,7 @@ module YSI
     end
 
     def config_url
-      branch = self.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }.branch
+      branch = self.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }&.branch || "master"
 
       "https://raw.githubusercontent.com/#{github_project_name}/#{branch}/yes_ship_it.conf"
     end

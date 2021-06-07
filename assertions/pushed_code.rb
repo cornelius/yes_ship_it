@@ -7,7 +7,7 @@ module YSI
     end
 
     def check
-      branch = self.engine.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }.branch
+      branch = self.engine.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }&.branch || "master"
 
       if Git.new(Executor.new, Dir.pwd, branch).needs_push?
         return nil
