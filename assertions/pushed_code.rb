@@ -7,7 +7,9 @@ module YSI
     end
 
     def check
-      if Git.new(Executor.new).needs_push?
+      branch = self.engine.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }.branch
+
+      if Git.new(Executor.new, Dir.pwd, branch).needs_push?
         return nil
       else
         return "up-to-date"

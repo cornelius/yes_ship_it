@@ -1,8 +1,9 @@
 module YSI
   class Git
-    def initialize(executor, working_dir = Dir.pwd)
+    def initialize(executor, working_dir = Dir.pwd, branch = "master")
       @executor = executor
       @working_dir = working_dir
+      @branch = branch
     end
 
     def run_git(args)
@@ -16,9 +17,9 @@ module YSI
     end
 
     def needs_push?
-      local_master = run_git(["rev-parse", "master"])
-      remote_master = run_git(["rev-parse", "origin/master"])
-      base = run_git(["merge-base", "master", "origin/master"])
+      local_master = run_git(["rev-parse", @branch])
+      remote_master = run_git(["rev-parse", "origin/#{@branch}"])
+      base = run_git(["merge-base", "master", "origin/#{@branch}"])
 
       remote_master == base && local_master != remote_master
     end

@@ -90,7 +90,9 @@ module YSI
     end
 
     def config_url
-      "https://raw.githubusercontent.com/#{github_project_name}/master/yes_ship_it.conf"
+      branch = self.assertions.find { |assertion| assertion.is_a?(YSI::ReleaseBranch) }.branch
+
+      "https://raw.githubusercontent.com/#{github_project_name}/#{branch}/yes_ship_it.conf"
     end
 
     def tag

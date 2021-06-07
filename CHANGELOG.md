@@ -2,6 +2,7 @@
 
 ## Version 0.2.2
 
+* Add branch configuration for release_branch assertion
 * Match ruby versions between single quotes
 
 ## Version 0.2.1
