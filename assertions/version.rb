@@ -25,7 +25,7 @@ module YSI
     def parse_version(file_name)
       if file_name =~ /\.rb$/
         File.read(file_name).each_line do |line|
-          if line =~ /VERSION = "(.*)"/
+          if line =~ /VERSION = ['"](.*)['"]/
             return $1
           end
         end

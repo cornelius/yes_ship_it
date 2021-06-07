@@ -1,5 +1,9 @@
 # Change log of yes_ship_it
 
+## Version 0.2.2
+
+* Match ruby versions between single quotes
+
 ## Version 0.2.1
 
 * Make working tree check work with git 2.12
