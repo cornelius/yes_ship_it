@@ -3,3 +3,7 @@ Gemfile.lock
 tmp
 *.swp
 .vscode
+
+.bundle/
+.byebug_history
+tags
