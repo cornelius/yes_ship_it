@@ -11,3 +11,4 @@ affect you.
 * [cli_tester](https://github.com/cornelius/cli_tester)
 * [Mycroft](https://github.com/cornelius/mycroft)
 * [Httpotemkin](https://github.com/cornelius/httpotemkin)
+* [kubeojo](https://github.com/MalloZup/kubeojo)
